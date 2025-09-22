@@ -1,25 +1,38 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    let prompt = "Type to eat!";
+    const prompts = ["burger", "fries", "sundae", "pizza", "salad"];
+    let promptIndex = 0;
+    let prompt = prompts[promptIndex];
     let input = "";
     let started = false;
     let finished = false;
     let startTime = 0;
     let endTime = 0;
     let streak = 3;
+    let quota = 0;
 
     function startTest() {
         input = "";
         started = true;
         finished = false;
         startTime = Date.now();
+        promptIndex = 0;
+        prompt = prompts[promptIndex];
+        quota = 0;
     }
 
     function checkInput() {
-        if (input === prompt) {
-            finished = true;
-            endTime = Date.now();
-            streak += 1;
+        if (input.trim().toLowerCase() === prompt.toLowerCase()) {
+            quota += 1;
+            input = ""; // Clear input for next prompt
+            promptIndex += 1;
+            if (promptIndex < prompts.length) {
+                prompt = prompts[promptIndex];
+            } else {
+                finished = true;
+                endTime = Date.now();
+                streak += 1;
+            }
         }
     }
 </script>
@@ -28,7 +41,15 @@
     <div class="pet-area">
         <div class="pet-face"></div>
         <div class="thought-bubble">
-            🍔
+            {#if !finished}
+                {#if prompt === "burger"}🍔{/if}
+                {#if prompt === "fries"}🍟{/if}
+                {#if prompt === "sundae"}🍨{/if}
+                {#if prompt === "pizza"}🍕{/if}
+                {#if prompt === "salad"}🥗{/if}
+            {:else}
+                🎉
+            {/if}
         </div>
     </div>
     <div class="table">
@@ -54,10 +75,11 @@
     />
     {#if !started}
         <button on:click={startTest}>Start</button>
-    {:else if finished}
-        <p>Done! Time: {(endTime - startTime) / 1000}s</p>
-        <button on:click={startTest}>Try Again</button>
     {/if}
+    <div class="quota-bar-demo">
+        <div class="quota-fill" style="height: {quota * 40}px"></div>
+        <span>{quota} / {prompts.length} quota</span>
+    </div>
 </div>
 
 <style>
@@ -117,5 +139,29 @@
 }
 .pet-face::after {
     width: 24px; height: 24px; left: 68px; top: 38px;
+}
+
+.quota-bar-demo {
+    width: 40px;
+    height: 200px;
+    background: #f7f7a7;
+    border-radius: 12px;
+    margin: 1rem auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+.quota-fill {
+    width: 100%;
+    background: #f77a7a;
+    border-radius: 12px 12px 0 0;
+    transition: height 0.2s;
+}
+.finished-msg {
+    margin-top: 1rem;
+    font-weight: bold;
+    color: #f77a7a;
 }
 </style>
