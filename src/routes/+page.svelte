@@ -78,7 +78,7 @@
     {/if}
     <div class="quota-bar-demo">
         <div class="quota-fill" style="height: {quota * 40}px"></div>
-        <span>{quota} / {prompts.length} quota</span>
+        <span>{quota} / 75 quota</span>
     </div>
 </div>
 
@@ -170,6 +170,9 @@
 }
 
 .typing-test {
+}
+
+.streak {
     font-size: 30px;
 }
 </style>
