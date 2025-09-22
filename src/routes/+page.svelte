@@ -164,4 +164,12 @@
     font-weight: bold;
     color: #f77a7a;
 }
+
+.thought-bubble {
+    font-size: 80px;
+}
+
+.typing-test {
+    font-size: 30px;
+}
 </style>
