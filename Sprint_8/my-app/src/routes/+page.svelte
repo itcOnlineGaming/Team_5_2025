@@ -26,7 +26,7 @@
 	</div>
 </div>
 
-<button class="confirmButtonID" on:click={sendFeedback}>
+<button class="confirmButton" on:click={sendFeedback}>
     {label}
 </button>
 
@@ -67,7 +67,7 @@
 		background-color: var(--hover-color);
 	}
 
-	.confirmButtonID {
+	.confirmButton {
         background: rgba(50, 50, 250, 0.507);
     }
 </style>

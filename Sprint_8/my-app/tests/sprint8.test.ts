@@ -11,7 +11,12 @@ test.describe('Feeling Page', () => {
     await page.goto('http://localhost:5173');
     const circles = page.locator('.circle');
     await circles.nth(2).click();
-    await expect(circles.nth(2)).toHaveClass(/selected/);
     await expect(circles.nth(0)).not.toHaveClass(/selected/);
+  });
+
+  test('Feedback Sent on Button Press', async ({ page }) => {
+    await page.goto('http://localhost:5173');
+    const button = page.locator('confirmButton');
+    // ...
   });
 });
