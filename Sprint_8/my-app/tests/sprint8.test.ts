@@ -25,4 +25,24 @@ test.describe('Feeling Page', () => {
     const box = page.locator('.box');
     await expect(box).toBeVisible(); // set to be true (displays) on start
   });
+
+  test('slider is present and has correct gradient colors', async ({ page }) => {
+    await page.goto('http://localhost:5173');
+    const slider = page.locator('.slider');
+
+    // Check if slider exists
+    await expect(slider).toBeVisible();
+
+    // Check if slider has correct background gradient
+    const sliderBackground = await slider.evaluate((el) => {
+      return window.getComputedStyle(el).background;
+    });
+
+    // Verify background contains our color values; needs to be in rgb format
+    expect(sliderBackground).toContain('rgb(255, 0, 0)');        // red
+    expect(sliderBackground).toContain('rgb(255, 165, 0)');      // orange
+    expect(sliderBackground).toContain('rgb(255, 255, 0)');      // yellow
+    expect(sliderBackground).toContain('rgb(0, 128, 0)');        // green
+    expect(sliderBackground).toContain('rgb(144, 238, 144)');    // lightgreen
+  });
 });
