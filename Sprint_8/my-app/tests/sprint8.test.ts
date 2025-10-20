@@ -17,6 +17,6 @@ test.describe('Feeling Page', () => {
   test('Feedback Sent on Button Press', async ({ page }) => {
     await page.goto('http://localhost:5173');
     const button = page.locator('confirmButton');
-    // ...
+    await page.locator('button:text("Confirm")').click();
   });
 });
