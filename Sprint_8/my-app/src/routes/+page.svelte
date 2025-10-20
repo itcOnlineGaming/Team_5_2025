@@ -18,9 +18,11 @@
 
     let message_selection = "";
 
+    message_selection = message_1; // for testing display
+
     let num: number = 1;
     // Change what output text will  be 
-    function messageChanger(num: number)
+    export function messageChanger(num: number)
     {
         switch (num)
         {
@@ -42,13 +44,13 @@
         }
     }
 
-    // Message Position
+    // Message Position (add export in front for testing later)
     function message_position()
     {
 
     }
 
-    // Message Visibility
+    // Message Visibility (add export in front for testing later)
     let b_isMessageVisible = true;
     function messageVisToggle()
     {
@@ -56,26 +58,53 @@
     }
 </script>
 
+
 <!-- Check if we are able to show the message with a bool -->
+<!-- Needed to put the box and triangle into a container they sit under one another-->
 {#if b_isMessageVisible == true}
-    <div class="box">{message_5}</div>
+    <div class="speech-bubble">
+        <div class="box">
+            {message_selection}
+        </div>
+	<div class="speech-arrow"></div>
+</div>
 {/if}
 
+
+<!-- Speech bubble container -->
 <style>
+	/* Container to hold triangle and box */
+	.speech-bubble 
+    {
+		display: flex;
+		flex-direction: column; /* puts triangle under the box */
+		align-items: center;
+	}
+
+	/* Triangle below the box */
+	.speech-arrow 
+    {
+		width: 0;
+		height: 0;
+		border-left: 1em solid transparent;
+		border-right: 1em solid transparent;
+		border-top: 1em solid #5964c9; 
+	}
+
+	/* Speech bubble box */
 	.box 
     {
-		width: 10em;
-		height: 5em;
+        display:none;
+		width: 15em;
+		min-height: 5em;
 		border-radius: 0.5em;
-		margin: 0 0 1em 0;
-        padding: 1em;
+		padding: 1em;
 		background-color: #5964c9;
-        font-family: arial;
-        text-align: center;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        visibility: visible;
+		color: white;
+		font-family: Arial, sans-serif;
+		text-align: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 </style>
