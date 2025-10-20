@@ -18,7 +18,7 @@
 
     let message_selection = "";
 
-    message_selection = message_1; // for testing display
+    //message_selection = message_1; // for testing display
 
     let num: number = 1;
     // Change what output text will  be 
@@ -69,6 +69,10 @@
 </script>
 
 
+<!--- Test Button -->
+<button class="testButton" on:click={sendFeedback}>
+    {label}
+</button>
 
 <!-- Check if we are able to show the message with a bool -->
 <!-- Needed to put the box and triangle into a container they sit under one another-->
