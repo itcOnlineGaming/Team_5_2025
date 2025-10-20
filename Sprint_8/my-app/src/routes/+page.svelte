@@ -1,15 +1,19 @@
-<!-- Needs a position input from another function (where to be under Emotion Icon?)-->
-<!-- Needs a Emotion State input from another function (changes what the message string will be)-->
-<!-- Needs a Visible input from another function (where the message is set to visible or not)-->
-
-<h1>Speech Bubbles</h1>
-
 <script lang="ts">
-    //type SpeechVisible = {
-      //  label:
-    //}
+	const colors: string[] = ['red', 'orange', 'yellow', 'green', 'lightgreen'];
+	let selectedIndex: number | null = null;
 
-    // 1 = most stressed, 5 = least stressed
+	function handleClick(index: number) {
+		selectedIndex = index;
+	}
+
+	let label: string = "Confirm";
+
+    function sendFeedback() {
+        label = "You are feeling quite great currently!";
+    };
+
+	// Speech Bubble
+	// 1 = most stressed, 5 = least stressed
     let message_1 = "I'm feeling overwhelmed";
     let message_2 = "Might need a break";
     let message_3 = "I'm indifferent";
@@ -18,9 +22,7 @@
 
     let message_selection = "";
 
-    //message_selection = message_1; // for testing display
-
-    let num: number = 1;
+	let num: number = 1;
     // Change what output text will  be 
     export function messageChanger(num: number)
     {
@@ -44,10 +46,10 @@
         }
     }
 
-    // Message Position (add export in front for testing later)
+	// Message Position (add export in front for testing later)
     function message_position()
     {
-
+		// Place under what Icon was selected
     }
 
     // Message Visibility (add export in front for testing later)
@@ -56,26 +58,26 @@
     {
         b_isMessageVisible = !b_isMessageVisible;
     }
-
-	function handleClick(index: number) {
-		selectedIndex = index;
-	}
-
-	let label: string = "Confirm";
-
-    function sendFeedback() {
-        label = "You are feeling quite great currently!";
-    };
 </script>
 
+<div class="wrapper">
+	<div class="text">How are you feeling today?</div>
+	<div class="circle-container">
+		{#each colors as color, index}
+			<div
+				class="circle {selectedIndex === index ? 'selected' : ''}"
+				style="--hover-color: {color};"
+				on:click={() => handleClick(index)}
+			></div>
+		{/each}
+	</div>
+</div>
 
-<!--- Test Button -->
-<button class="testButton" on:click={sendFeedback}>
+<button class="confirmButton" on:click={sendFeedback}>
     {label}
 </button>
 
-<!-- Check if we are able to show the message with a bool -->
-<!-- Needed to put the box and triangle into a container they sit under one another-->
+<!-- Speech Bubble -->
 {#if b_isMessageVisible == true}
     <div class="speech-bubble">
         <div class="box">
@@ -85,44 +87,10 @@
 </div>
 {/if}
 
-
-<!-- Speech bubble container -->
-<button class="confirmButton" on:click={sendFeedback}>
-    {label}
-</button>
-
 <style>
-	/* Container to hold triangle and box */
-	.speech-bubble 
-    {
+	.wrapper {
 		display: flex;
-		flex-direction: column; /* puts triangle under the box */
-		align-items: center;
-	}
-
-	/* Triangle below the box */
-	.speech-arrow 
-    {
-		width: 0;
-		height: 0;
-		border-left: 1em solid transparent;
-		border-right: 1em solid transparent;
-		border-top: 1em solid #5964c9; 
-	}
-
-	/* Speech bubble box */
-	.box 
-    {
-        display:none;
-		width: 15em;
-		min-height: 5em;
-		border-radius: 0.5em;
-		padding: 1em;
-		background-color: #5964c9;
-		color: white;
-		font-family: Arial, sans-serif;
-		text-align: center;
-		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		height: 100vh;
@@ -159,5 +127,41 @@
 	.confirmButton {
         background: rgba(50, 50, 250, 0.507);
     }
-</style>
 
+	/* Container to hold triangle and box */
+	.speech-bubble 
+    {
+		display: flex;
+		flex-direction: column; /* puts triangle under the box */
+		align-items: center;
+	}
+
+	/* Triangle below the box */
+	.speech-arrow 
+    {
+		width: 0;
+		height: 0;
+		border-left: 1em solid transparent;
+		border-right: 1em solid transparent;
+		border-top: 1em solid #5964c9; 
+	}
+
+	/* Speech bubble box */
+	.box 
+    {
+        display:none;
+		width: 15em;
+		min-height: 5em;
+		border-radius: 0.5em;
+		padding: 1em;
+		background-color: #5964c9;
+		color: white;
+		font-family: Arial, sans-serif;
+		text-align: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100vh;
+		text-align: center;
+	}
+</style>

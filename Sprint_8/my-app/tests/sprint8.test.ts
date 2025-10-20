@@ -11,7 +11,6 @@ test.describe('Feeling Page', () => {
     await page.goto('http://localhost:5173');
     const circles = page.locator('.circle');
     await circles.nth(2).click();
-    //await expect(circles.nth(2)).toHaveClass(/selected/);
     await expect(circles.nth(0)).not.toHaveClass(/selected/);
   });
 
@@ -21,10 +20,9 @@ test.describe('Feeling Page', () => {
     await page.locator('button:text("Confirm")').click();
   });
 
-    test('Speech Bubble shown on startup', async ({ page }) => {
+  test('Speech Bubble shown on startup', async ({ page }) => {
     await page.goto('http://localhost:5173');
     const box = page.locator('.box');
-    await expect(box).not.toBeVisible();
-    
+    await expect(box).toBeVisible(); // set to be true (displays) on start
   });
 });
