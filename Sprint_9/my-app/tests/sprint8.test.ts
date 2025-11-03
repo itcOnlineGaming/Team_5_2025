@@ -1,0 +1,48 @@
+import { test, expect } from '@playwright/test';
+
+test.describe('Feeling Page', () => {
+  test('renders 5 circles', async ({ page }) => {
+    await page.goto('http://localhost:5173');
+    const circles = await page.locator('.circle').all();
+    expect(circles.length).toBe(5);
+  });
+
+  test('clicking a circle selects it', async ({ page }) => {
+    await page.goto('http://localhost:5173');
+    const circles = page.locator('.circle');
+    await circles.nth(2).click();
+    await expect(circles.nth(0)).not.toHaveClass(/selected/);
+  });
+
+  test('Feedback Sent on Button Press', async ({ page }) => {
+    await page.goto('http://localhost:5173');
+    const button = page.locator('confirmButton');
+    await page.locator('button:text("Confirm")').click();
+  });
+
+  test('Speech Bubble shown on startup', async ({ page }) => {
+    await page.goto('http://localhost:5173');
+    const box = page.locator('.box');
+    await expect(box).toBeVisible(); // set to be true (displays) on start
+  });
+
+  test('slider is present and has correct gradient colors', async ({ page }) => {
+    await page.goto('http://localhost:5173');
+    const slider = page.locator('.slider');
+
+    // Check if slider exists
+    await expect(slider).toBeVisible();
+
+    // Check if slider has correct background gradient
+    const sliderBackground = await slider.evaluate((el) => {
+      return window.getComputedStyle(el).background;
+    });
+
+    // Verify background contains our color values; needs to be in rgb format
+    expect(sliderBackground).toContain('rgb(255, 0, 0)');        // red
+    expect(sliderBackground).toContain('rgb(255, 165, 0)');      // orange
+    expect(sliderBackground).toContain('rgb(255, 255, 0)');      // yellow
+    expect(sliderBackground).toContain('rgb(0, 128, 0)');        // green
+    expect(sliderBackground).toContain('rgb(144, 238, 144)');    // lightgreen
+  });
+});
