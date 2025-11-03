@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import PopupEnd from '../popupEnd.svelte';
 	
-	let showExitPopup = $state(false);
 	let todos = $state([
 		{ id: 1, text: 'Finish Concepts', completed: false },
 		{ id: 2, text: 'Finish Concepts', completed: false },
@@ -16,14 +16,6 @@
 		{ day: 'SAT', value: 5 },
 		{ day: 'SUN', value: 5 }
 	]);
-
-	function openExitPopup() {
-		showExitPopup = true;
-	}
-
-	function closeExitPopup() {
-		showExitPopup = false;
-	}
 
 	function toggleTodo(id: number) {
 		const todo = todos.find(t => t.id === id);
@@ -61,34 +53,8 @@
 	}
 </script>
 
-<h1> Hello, please press continue to go to the Home Screen </h1>
-
-<button on:click={OnClickNavigate}>Confirm</button>
-
 <div class="container">
 	<h1 class="title">Home Screen</h1>
-
-	<!-- Exit Popup -->
-	{#if showExitPopup}
-		<div class="popup-overlay" role="dialog" aria-labelledby="exit-title">
-			<div class="popup exit-popup">
-				<h2 id="exit-title">Thank You for Testing!</h2>
-				<p>We appreciate your time. Please answer these questions:</p>
-				<div class="question">
-					<label for="ease-of-use">How easy was the app to use? (1-5)</label>
-					<input type="number" id="ease-of-use" min="1" max="5" />
-				</div>
-				<div class="question">
-					<label for="feedback">Any additional feedback?</label>
-					<textarea id="feedback" rows="3"></textarea>
-				</div>
-				<div class="button-group">
-					<button onclick={closeExitPopup} class="btn-secondary">Close</button>
-					<button onclick={() => alert('Feedback submitted!')} class="btn-primary">Submit</button>
-				</div>
-			</div>
-		</div>
-	{/if}
 
 	<!-- Todo List Section -->
 	<section class="todo-section">
@@ -170,9 +136,5 @@
 			EDIT ✏️
 		</button>
 	</section>
-
-	<!-- Exit Button -->
-	<button onclick={openExitPopup} class="exit-btn">
-		EXIT
-	</button>
+	<PopupEnd></PopupEnd>
 </div>
