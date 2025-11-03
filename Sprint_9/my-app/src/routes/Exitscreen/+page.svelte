@@ -21,6 +21,31 @@
     { number: 5, description: 'Mood Inputted', result: "2" }
     ];
 
+    // Timer
+    let elapsed_time = $state(0);
+    let duration = $state(50000); // amount of time until it takes then it shows the table
+
+    onMount(() => 
+    {
+        let last_time = performance.now();
+
+        let frame;
+        (function update() 
+        {
+        frame = requestAnimationFrame(update);
+        const time = window.performance.now();
+        elapsed_time += Math.min(time - last_time, duration -
+        elapsed_time);
+        last_time = time;
+        })();
+
+         console.log("Time is : " + frame)
+        
+        //elapsed_time += Math.min(time - last_time, duration - elapsed_time);
+        //last_time = time;
+    });
+
+   
 </script>
 
 <button on:click={OnClickNavigate}>Confirm</button>
