@@ -3,8 +3,9 @@
 	import { goto } from "$app/navigation";
     // Timer import
     import { onMount } from 'svelte';
+    
 
-    function OnClickNavigate()
+    function OnClickNavigateToHomescreen()
     {
         console.log("Confirm Button Clicked");
         goto("/Homescreen", {noScroll:false});
@@ -48,7 +49,7 @@
    
 </script>
 
-<button on:click={OnClickNavigate}>Confirm</button>
+<button on:click={OnClickNavigateToHomescreen}>Confirm</button>
 
 <h2> Result Table </h2>
 
