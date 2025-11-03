@@ -2,19 +2,23 @@
     import { onMount } from "svelte";
 
     let timeElapsed = 0;
-	let timer: ReturnType<typeof setInterval>;
-	let timerRunning = true;
+    let timer: ReturnType<typeof setInterval> | null = null;
+    let timerRunning = false;
 
    onMount(() => {
-		timer = setInterval(() => {
-			if (timerRunning) {
-				timeElapsed += 1;
-			}
-		}, 1000);
+	console.log("Timer started");
+	timerRunning = true;
 
+	timer = setInterval(() => {
+		if (timerRunning) {
+			timeElapsed += 1;
+		}
+	}, 1000);
 
-	    return () => clearInterval(timer);
-    });
+	return () => {
+		if (timer) clearInterval(timer);
+	};
+});
 
 	const colors: string[] = ['red', 'orange', 'yellow', 'green', 'lightgreen'];
 	let selectedIndex: number | null = null;
@@ -23,9 +27,13 @@
 	function handleClick(index: number) {
 		selectedIndex = index;
 
-        timerRunning = false;
-		clearInterval(timer);
-		console.log(`Time taken: ${timeElapsed} seconds`);
+        if (timerRunning) {
+		timerRunning = false;
+		if (timer) clearInterval(timer);
+		console.log(`⏱️ Time taken: ${timeElapsed} seconds`);
+	} else {
+		console.warn("Timer was not running!");
+	}
         showContinueButton = true;
 	}
 
