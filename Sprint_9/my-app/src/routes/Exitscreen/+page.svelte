@@ -13,13 +13,19 @@
     }
 
     // Test results:
+   // let session_results = 
+   // [
+   // { number: 1, description: 'Total Session Time', result: "1000" + " seconds" },
+   // { number: 2, description: 'Total Button Clicks', result: "100" + " clicks" },
+   // { number: 3, description: 'Mood Inputted', result: "2" },
+   // { number: 4, description: 'Incorrect input', result: "5" + " wrong clicks" },
+    //{ number: 5, description: 'Mood Inputted', result: "2" }
+    //];
+
     let session_results = 
     [
-    { number: 1, description: 'Total Session Time', result: "1000" + " seconds" },
-    { number: 2, description: 'Total Button Clicks', result: "100" + " clicks" },
-    { number: 3, description: 'Mood Inputted', result: "2" },
-    { number: 4, description: 'Incorrect input', result: "5" + " wrong clicks" },
-    { number: 5, description: 'Mood Inputted', result: "2" }
+    { number: 1, description: "Home Screen" + "enter description", result: "1" },
+    { number: 2, description: "Mood Screen" + "enter description", result: "1" }
     ];
 
     // Timer
