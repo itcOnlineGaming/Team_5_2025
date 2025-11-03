@@ -1,6 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import PopupEnd from '../popupEnd.svelte';
+	import { goto } from "$app/navigation";
+
+	function OnClickNavigateMoodScreen()
+    {
+        goto("/MoodScreen", {noScroll:false});
+    }
 	
 	let todos = $state([
 		{ id: 1, text: 'Finish Concepts', completed: false },
@@ -132,7 +138,7 @@
 			</svg>
 		</div>
 
-		<button onclick={editMoodGraph} class="edit-btn">
+		<button onclick={OnClickNavigateMoodScreen} class="edit-btn">
 			EDIT ✏️
 		</button>
 	</section>

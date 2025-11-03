@@ -1,4 +1,5 @@
 <script>
+	import { goto } from "$app/navigation";
     let showExitPopup = $state(false);
 
     function openExitPopup() {
@@ -8,6 +9,12 @@
 	function closeExitPopup() {
 		showExitPopup = false;
 	}
+
+	function OnClickNavigateExitScreen()
+    {
+        console.log("Exit Screen Button Clicked");
+        goto("/Exitscreen", {noScroll:false});
+    }
 </script>
     
     <!-- Exit Popup -->
@@ -26,7 +33,7 @@
 				</div>
 				<div class="button-group">
 					<button onclick={closeExitPopup} class="btn-secondary">Close</button>
-					<button onclick={() => alert('Feedback submitted!')} class="btn-primary">Submit</button>
+					<button onclick={OnClickNavigateExitScreen}>Submit</button>
 				</div>
 			</div>
 		</div>

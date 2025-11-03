@@ -11,7 +11,7 @@
         goto("/Homescreen", {noScroll:false});
     }
 
-        function OnClickNavigateExitScreen()
+    function OnClickNavigateExitScreen()
     {
         console.log("Exit Screen Button Clicked");
         goto("/Exitscreen", {noScroll:false});
