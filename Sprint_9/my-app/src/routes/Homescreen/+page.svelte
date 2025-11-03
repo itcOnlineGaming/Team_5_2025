@@ -61,6 +61,10 @@
 	}
 </script>
 
+<h1> Hello, please press continue to go to the Home Screen </h1>
+
+<button on:click={OnClickNavigate}>Confirm</button>
+
 <div class="container">
 	<h1 class="title">Home Screen</h1>
 
