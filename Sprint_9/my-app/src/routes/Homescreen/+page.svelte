@@ -1,62 +1,58 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import PopupEnd from '../popupEnd.svelte';
-	import { goto } from "$app/navigation";
+    import { onMount } from 'svelte';
+    import PopupEnd from '../popupEnd.svelte';
+    import { goto } from "$app/navigation";
+    import { tasksStore } from '$lib/stores/tasks.js';
 
-	function OnClickNavigateMoodScreen()
+    function OnClickNavigateMoodScreen()
     {
         goto("/MoodScreen", {noScroll:false});
     }
-	
-	let todos = $state([
-		{ id: 1, text: 'Finish Concepts', completed: false },
-		{ id: 2, text: 'Finish Concepts', completed: false },
-		{ id: 3, text: 'Finish Concepts', completed: false }
-	]);
-	let moodData = $state([
-		{ day: 'MON', value: 3 },
-		{ day: 'TUE', value: 1 },
-		{ day: 'WED', value: 4 },
-		{ day: 'THU', value: 2 },
-		{ day: 'FRI', value: 5 },
-		{ day: 'SAT', value: 5 },
-		{ day: 'SUN', value: 5 }
-	]);
 
-	function toggleTodo(id: number) {
-		const todo = todos.find(t => t.id === id);
-		if (todo) {
-			todo.completed = !todo.completed;
-		}
-	}
+    function OnClickNavigateTasksScreen()
+    {
+        goto("/TasksScreen", {noScroll:false});
+    }
+    
+    let todos = $state([]);
+    
+    // Subscribe to the tasks store
+    tasksStore.subscribe(value => {
+        todos = value;
+    });
 
-	function editTodoList() {
-		console.log('Edit todo list');
-	}
+    let moodData = $state([
+        { day: 'MON', value: 3 },
+        { day: 'TUE', value: 1 },
+        { day: 'WED', value: 4 },
+        { day: 'THU', value: 2 },
+        { day: 'FRI', value: 5 },
+        { day: 'SAT', value: 5 },
+        { day: 'SUN', value: 5 }
+    ]);
 
-	function editMoodGraph() {
-		console.log('Edit mood graph');
-	}
+    function toggleTodo(id: number) {
+        const updatedTodos = todos.map(todo => 
+            todo.id === id ? { ...todo, completed: !todo.completed } : todo
+        );
+        tasksStore.set(updatedTodos);
+    }
 
-	function addIcon() {
-		console.log('Add icon');
-	}
-
-	// Calculate SVG path for mood graph
-	function getMoodPath() {
-		const width = 280;
-		const height = 150;
-		const padding = 20;
-		const maxMood = 5;
-		
-		const points = moodData.map((data, i) => {
-			const x = padding + (i * (width - 2 * padding)) / (moodData.length - 1);
-			const y = height - padding - ((data.value / maxMood) * (height - 2 * padding));
-			return `${x},${y}`;
-		});
-		
-		return `M ${points.join(' L ')}`;
-	}
+    // Calculate SVG path for mood graph
+    function getMoodPath() {
+        const width = 280;
+        const height = 150;
+        const padding = 20;
+        const maxMood = 5;
+        
+        const points = moodData.map((data, i) => {
+            const x = padding + (i * (width - 2 * padding)) / (moodData.length - 1);
+            const y = height - padding - ((data.value / maxMood) * (height - 2 * padding));
+            return `${x},${y}`;
+        });
+        
+        return `M ${points.join(' L ')}`;
+    }
 </script>
 
 <div class="container">
@@ -78,7 +74,7 @@
 				</li>
 			{/each}
 		</ul>
-		<button onclick={editTodoList} class="edit-btn">
+		<button onclick={OnClickNavigateTasksScreen} class="edit-btn">
 			EDIT ✏️
 		</button>
 	</section>
@@ -87,7 +83,7 @@
 	<section class="mood-section">
 		<div class="mood-header">
 			<h2>THIS WEEKS MOOD GRAPH</h2>
-			<button onclick={addIcon} class="add-icon-btn" aria-label="Add icon">
+			<button class="add-icon-btn" aria-label="Add icon">
 				ADD ICON
 			</button>
 		</div>
