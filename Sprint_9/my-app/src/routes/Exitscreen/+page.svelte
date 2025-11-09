@@ -8,7 +8,7 @@
     function OnClickNavigateToHomescreen()
     {
         console.log("Confirm Button Clicked");
-        goto("/Homescreen", {noScroll:false});
+        goto("/", {noScroll:false});
 
     }
 
@@ -55,7 +55,7 @@
    
 </script>
 
-<button on:click={OnClickNavigateToHomescreen}>Confirm</button>
+<button on:click={OnClickNavigateToHomescreen}>Return to Main Screen</button>
 
 <h2> Result Table </h2>
 

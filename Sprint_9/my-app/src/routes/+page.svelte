@@ -1,14 +1,15 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-    import PopupStart from "./popupStart.svelte";
-    import './styles.css';
-
-
+    import PopupStart from "./popupStart.svelte";    import './styles.css';
+    import { getAgreementStatus } from './consentAgreement';
 
     function OnClickNavigate()
     {
         console.log("Confirm Button Clicked");
-        goto("/Homescreen", {noScroll:false});
+        if (getAgreementStatus())
+            goto("/Homescreen", {noScroll:false});
+        else
+            alert("Agreement has not been accepted. Please accept the agreement to access the application");
     }
 
     function OnClickNavigateExitScreen()
