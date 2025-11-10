@@ -13,6 +13,11 @@
     {
         goto("/TasksScreen", {noScroll:false});
     }
+
+	function OnClickNavigateBreathingScreen()
+    {
+        goto("/Breathingscreen", {noScroll:false});
+    }
     
     let todos = $state([]);
     
@@ -140,3 +145,5 @@
 	</section>
 	<PopupEnd></PopupEnd>
 </div>
+
+<button onclick={OnClickNavigateBreathingScreen}>Breathing Screen</button>
