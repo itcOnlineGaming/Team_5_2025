@@ -50,7 +50,7 @@ jobs:
       # 3) Install project dependencies for the frontend
       #    - Uses npm ci for deterministic, lockfile-based installs.
       - name: Install dependencies
-        working-directory: frontend
+        working-directory: my_app
         run: npm ci
 
 
