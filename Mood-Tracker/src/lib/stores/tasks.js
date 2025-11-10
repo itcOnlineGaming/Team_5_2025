@@ -8,3 +8,9 @@ const defaultTasks = [
 ];
 
 export const tasksStore = writable(defaultTasks);
+
+export const tasksBreathingStore = writable({
+    timer_number: 0,
+    b_isTriggered: false
+});
+
