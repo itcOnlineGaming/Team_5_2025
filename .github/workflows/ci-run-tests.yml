@@ -124,7 +124,7 @@ jobs:
         working-directory: Mood-Tracker
         env:
           CI: 'true'  # Many tools (including Playwright) use this to enable CI-safe defaults.
-        run: npx playwright test tests --reporter=list,html
+        run: npx playwright test
 
 
       # 11) Stop the preview server (always runs, even if tests fail)
