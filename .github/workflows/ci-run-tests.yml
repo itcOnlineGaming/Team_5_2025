@@ -104,7 +104,7 @@ jobs:
       #    - If present: runs tests once in CI mode (no watch).
       #    - If absent: logs a message and continues without failing the workflow.
       - name: Run unit/component tests (Vitest if present)
-        working-directory: Sprint_8/my-app/tests
+        working-directory: Sprint_8/my-app
         run: |
           if npm ls vitest --depth=0 > /dev/null 2>&1; then
             echo "Vitest detected, running unit/component tests..."
