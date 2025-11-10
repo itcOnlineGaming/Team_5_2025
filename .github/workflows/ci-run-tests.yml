@@ -50,7 +50,7 @@ jobs:
       # 3) Install project dependencies for the frontend
       #    - Uses npm ci for deterministic, lockfile-based installs.
       - name: Install dependencies
-        working-directory: my_app
+        working-directory: Sprint_8/my_app
         run: npm ci
 
 
