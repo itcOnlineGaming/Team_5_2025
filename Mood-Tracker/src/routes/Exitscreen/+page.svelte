@@ -55,7 +55,7 @@
    
 </script>
 
-<button on:click={OnClickNavigateToHomescreen}>Return to Main Screen</button>
+<button onclick={OnClickNavigateToHomescreen}>Return to Main Screen</button>
 
 <h2> Result Table </h2>
 

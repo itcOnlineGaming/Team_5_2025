@@ -2,21 +2,22 @@
     import { onMount } from 'svelte';
     import PopupEnd from '../popupEnd.svelte';
     import { goto } from "$app/navigation";
+    import { base } from '$app/paths';
     import { tasksStore } from '$lib/stores/tasks.js';
 
     function OnClickNavigateMoodScreen()
     {
-        goto("/MoodScreen", {noScroll:false});
+        goto(`${base}/MoodScreen`, {noScroll:false});
     }
 
     function OnClickNavigateTasksScreen()
     {
-        goto("/TasksScreen", {noScroll:false});
+        goto(`${base}/TasksScreen`, {noScroll:false});
     }
 
 	function OnClickNavigateBreathingScreen()
     {
-        goto("/Breathingscreen", {noScroll:false});
+        goto(`${base}/Breathingscreen`, {noScroll:false});
     }
     
     let todos = $state([]);

@@ -1,5 +1,6 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
+    import { base } from '$app/paths';
     import { tasksBreathingStore } from '$lib/stores/tasks.js';
     import { get } from 'svelte/store';
 
@@ -46,7 +47,7 @@
 
     function OnClickNavigateToHomescreen()
     {
-        goto("/Homescreen", {noScroll:false});
+        goto(`${base}/Homescreen`, {noScroll:false});
         console.log("Confirm Button Clicked");
     }
 

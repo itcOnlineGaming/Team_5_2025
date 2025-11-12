@@ -1,5 +1,6 @@
 <script>
 	import { goto } from "$app/navigation";
+    import { base } from '$app/paths';
     let showExitPopup = $state(false);
 
     function openExitPopup() {
@@ -13,7 +14,7 @@
 	function OnClickNavigateExitScreen()
     {
         console.log("Exit Screen Button Clicked");
-        goto("/Exitscreen", {noScroll:false});
+        goto(`${base}/Exitscreen`, {noScroll:false});
     }
 </script>
     

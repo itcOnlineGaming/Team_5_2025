@@ -1,5 +1,6 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
+    import { base } from '$app/paths';
     import { tasksBreathingStore } from '$lib/stores/tasks.js';
 
     let number_input = 0;
@@ -10,7 +11,7 @@
         // Check if the time has been inputted
         if (b_isTriggerSet == true)
         {
-            goto("/BreathingExerciseScreen", {noScroll:false});
+            goto(`${base}/BreathingExerciseScreen`, {noScroll:false});
         }
         else
         {

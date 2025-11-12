@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
 </script>
 
 <div class="container">
@@ -7,8 +8,8 @@
 
 	<!-- Common Action Buttons for all TasksScreen pages -->
 	<div class="action-buttons">
-		<button onclick={() => goto('/Homescreen')} class="save-btn"> SAVE & RETURN </button>
-		<button onclick={() => goto('/Homescreen')} class="cancel-btn"> GO BACK </button>
+		<button onclick={() => goto(`${base}/Homescreen`)} class="save-btn"> SAVE & RETURN </button>
+		<button onclick={() => goto(`${base}/Homescreen`)} class="cancel-btn"> GO BACK </button>
 	</div>
 </div>
 
