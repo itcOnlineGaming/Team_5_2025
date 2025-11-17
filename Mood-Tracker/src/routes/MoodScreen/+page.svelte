@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
+	import { base } from "$app/paths";
 
     let timeElapsed = 0;
     let timer: ReturnType<typeof setInterval> | null = null;
@@ -47,7 +48,7 @@
     {
         showContinueButton = false;
         console.log("Confirm Button Clicked");
-        goto("/Homescreen", {noScroll:false});
+        goto(`${base}/Homescreen`, { noScroll: false });
     }
 
     function sendFeedback() {
