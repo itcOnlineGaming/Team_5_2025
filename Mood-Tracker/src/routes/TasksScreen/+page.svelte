@@ -1,7 +1,14 @@
 <script lang="ts">
     import { tasksStore } from '$lib/stores/tasks.js';
 
-    let tasks = $state([]);
+    type Task = {
+        id: number;
+        text: string;
+        completed: boolean;
+    };
+
+
+    let tasks: Task[] = $state([]);
     let newTaskText = $state('');
 
     // Subscribe to the store
@@ -11,7 +18,7 @@
 
     function addTask() {
         if (newTaskText.trim()) {
-            const newTask = {
+            const newTask: Task = {
                 id: Date.now(),
                 text: newTaskText.trim(),
                 completed: false
@@ -214,7 +221,7 @@
     }
 
     .add-btn {
-        background: #4CAF50;
+        background: linear-gradient(180deg, #6366f1 0%, #818cf8 100%);
         color: white;
         border: none;
         padding: 12px 16px;

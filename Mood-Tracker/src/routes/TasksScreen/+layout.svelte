@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { base } from '$app/paths';
+	import { goto } from "$app/navigation";
+	import { base } from "$app/paths";
 </script>
 
 <div class="container">
@@ -8,8 +8,12 @@
 
 	<!-- Common Action Buttons for all TasksScreen pages -->
 	<div class="action-buttons">
-		<button onclick={() => goto(`${base}/Homescreen`)} class="save-btn"> SAVE & RETURN </button>
-		<button onclick={() => goto(`${base}/Homescreen`)} class="cancel-btn"> GO BACK </button>
+		<button onclick={() => goto(`${base}/Homescreen`)} class="save-btn">
+			SAVE & RETURN
+		</button>
+		<button onclick={() => goto(`${base}/Homescreen`)} class="cancel-btn">
+			GO BACK
+		</button>
 	</div>
 </div>
 
@@ -25,7 +29,7 @@
 	}
 
 	.container::before {
-		content: '';
+		content: "";
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -44,7 +48,7 @@
 	}
 
 	.save-btn {
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		background: linear-gradient(180deg, #6366f1 0%, #818cf8 100%);
 		color: white;
 		border: none;
 		padding: 15px 25px;
