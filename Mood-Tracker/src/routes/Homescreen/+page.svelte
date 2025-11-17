@@ -86,57 +86,11 @@
 		};
 		return faces[value as keyof typeof faces] || faces[3];
 	}
-
-	// Calculate SVG path for mood graph
-	function getMoodPath(): string {
-		const width = 150;
-		const height = 80;
-		const paddingLeft = 0;
-		const paddingRight = 0;
-		const paddingTop = 5;
-		const paddingBottom = 10;
-		const maxMood = 5;
-		const n = moodData.length;
-
-		const points = moodData.map((data, i) => {
-			const x =
-				paddingLeft +
-				(i * (width - paddingLeft - paddingRight)) / (n - 1);
-			const y =
-				paddingTop +
-				((maxMood - data.value) / maxMood) *
-					(height - paddingTop - paddingBottom);
-			return `${x},${y}`;
-		});
-
-		return `M ${points.join(" L ")}`;
-	}
 </script>
 
 <div class="page-container">
 	<header class="page-header">
-		<button class="back-btn" aria-label="Go back">
-			<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-				<path
-					d="M15 18L9 12L15 6"
-					stroke="white"
-					stroke-width="2"
-					stroke-linecap="round"
-				/>
-			</svg>
-		</button>
 		<h1 class="page-title">Current Goal Project</h1>
-		<button class="search-btn" aria-label="Search">
-			<svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-				<circle cx="11" cy="11" r="8" stroke="white" stroke-width="2" />
-				<path
-					d="M21 21L16.5 16.5"
-					stroke="white"
-					stroke-width="2"
-					stroke-linecap="round"
-				/>
-			</svg>
-		</button>
 	</header>
 
 	<div class="content">
@@ -170,9 +124,9 @@
 						</li>
 					{/each}
 				</ul>
-				<button onclick={OnClickNavigateTasksScreen} class="edit-btn">
-					EDIT ✏️
-				</button>
+				<button onclick={OnClickNavigateTasksScreen} class="edit-btn" style="margin-top: 1.5rem;">
+                EDIT
+            </button>
 			</div>
 		</section>
 
@@ -190,7 +144,7 @@
 			</div>
 
 			<div class="mood-chart">
-				<!-- Emotion scale on the left -->
+				<!-- Mood faces scale -->
 				<div class="mood-scale">
 					{#each [5, 4, 3, 2, 1] as value}
 						<div class="mood-emoji">
@@ -199,7 +153,7 @@
 					{/each}
 				</div>
 
-				<!-- Graph area -->
+				<!-- Graph area with SVG and day labels -->
 				<div class="graph-area">
 					<div class="svg-wrapper">
 						<svg viewBox="0 0 100 60" class="mood-svg">
@@ -228,6 +182,7 @@
 								/>
 							{/each}
 						</svg>
+						<!-- Day labels grid, perfectly aligned with SVG points -->
 						<div class="day-labels-grid">
 							{#each moodData as data, i}
 								<span
@@ -240,6 +195,14 @@
 					</div>
 				</div>
 			</div>
+			<!-- Mood graph edit button -->
+			<button
+				onclick={OnClickNavigateMoodScreen}
+				class="edit-btn"
+				style="margin-top: 1.5rem;"
+			>
+				EDIT
+			</button>
 		</section>
 
 		<!-- Mindfulness Exercises Section -->
@@ -276,18 +239,9 @@
 	.page-header {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
+		justify-content: center;
 		padding: var(--spacing-md);
 		color: white;
-	}
-
-	.back-btn,
-	.search-btn {
-		background: transparent;
-		padding: var(--spacing-xs);
-		display: flex;
-		align-items: center;
-		justify-content: center;
 	}
 
 	.page-title {
