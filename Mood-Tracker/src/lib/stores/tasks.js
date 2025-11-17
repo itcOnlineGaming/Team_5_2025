@@ -14,3 +14,8 @@ export const tasksBreathingStore = writable({
     b_isTriggered: false
 });
 
+// Form submitted -> Rating (number), Feedback (text)
+export const tasksSubmissionStore = writable({
+    rating_number: 0,
+    feedback_text: " "
+});

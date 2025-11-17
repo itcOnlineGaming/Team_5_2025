@@ -1,9 +1,15 @@
 <!--- Exit Sceen -->
 <script lang="ts">
 	import { goto } from "$app/navigation";
-    // Timer import
-    import { onMount } from 'svelte';
+  import { tasksSubmissionStore } from '$lib/stores/tasks.js';
+  import { derived } from 'svelte/store';
+  // Timer import
+  import { onMount } from 'svelte';
     
+  // Grab the data from the .JS file
+  const submission = derived(tasksSubmissionStore, $store => $store);
+  
+
 
     function OnClickNavigateToHomescreen()
     {
@@ -24,8 +30,8 @@
 
     let session_results = 
     [
-    { number: 1, description: "Home Screen" + "enter description", result: "1" },
-    { number: 2, description: "Mood Screen" + "enter description", result: "1" }
+    { number: 1, description: $submission.feedback_text, result: $submission.rating_number }//,
+    //{ number: 2, description: "Mood Screen" + "enter description", result: "1" }
     ];
 
     // Timer
