@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
     import { base } from '$app/paths';
-    import PopupStart from "./popupStart.svelte";    import './styles.css';
+    import PopupStart from "./popupStart.svelte";    
+    import './styles.css';
     import { getAgreementStatus } from './consentAgreement';
 
     function OnClickNavigate()

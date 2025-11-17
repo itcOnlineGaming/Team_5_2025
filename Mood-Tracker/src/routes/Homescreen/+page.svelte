@@ -22,6 +22,10 @@
 		goto(`${base}/Breathingscreen`, { noScroll: false });
 	}
 
+	function OnClickNavigateYogaScreen() {
+		goto(`${base}/YogaScreen`, {noScroll: false});
+	}
+
 	let todos = $state<Todo[]>([]);
 
 	// Subscribe to the tasks store
