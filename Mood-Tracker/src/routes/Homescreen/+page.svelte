@@ -37,6 +37,13 @@
 		todos = value;
 	});
 
+	// Calculate progress percentage
+	let progressPercentage = $derived(() => {
+		if (todos.length === 0) return 0;
+		const completedTasks = todos.filter(todo => todo.completed).length;
+		return Math.round((completedTasks / todos.length) * 100);
+	});
+
 	function toggleTodo(id: number) {
 		const updatedTodos = todos.map((todo) =>
 			todo.id === id ? { ...todo, completed: !todo.completed } : todo,
@@ -47,7 +54,7 @@
 
 <div class="page-container">
 	<header class="page-header">
-		<h1 class="page-title">Current Goal Project</h1>
+		<h1 class="page-title">Current Goals:</h1>
 	</header>
 
 	<div class="content">
@@ -55,10 +62,10 @@
 		<section class="progress-section">
 			<div class="progress-header">
 				<span class="progress-label">Total Progress</span>
-				<span class="progress-percentage">75%</span>
+				<span class="progress-percentage">{progressPercentage()}%</span>
 			</div>
 			<div class="progress-bar-wrapper">
-				<div class="progress-bar" style="width: 75%"></div>
+				<div class="progress-bar" style="width: {progressPercentage()}%"></div>
 			</div>
 		</section>
 
