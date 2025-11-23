@@ -66,7 +66,7 @@
             </svg>
         </div>
 
-        <h2 class="mood-title">TODAY'S MOOD TRACKER</h2>
+        <h2 class="section-title">Today's Mood Graph</h2>
 
         <div class="header-icon heart-icon">
             <svg
@@ -363,16 +363,6 @@
         flex-shrink: 0;
     }
 
-    .mood-title {
-        flex: 1;
-        text-align: center;
-        font-size: 22px;
-        font-weight: 700;
-        color: #6366f1;
-        letter-spacing: 0.5px;
-        margin: 0;
-    }
-
     .graph-container {
         position: relative;
     }
@@ -427,6 +417,14 @@
         padding: 8px;
     }
 
+    .section-title {
+		font-size: var(--font-size-xl);
+		font-weight: var(--font-weight-bold);
+		text-align: center;
+		margin-bottom: var(--spacing-md);
+		color: var(--color-text);
+	}
+
     .mood-svg {
         width: 100%;
         height: 100%;
@@ -456,10 +454,6 @@
         .mood-graph-card {
             padding: 16px;
             margin-bottom: var(--spacing-lg);
-        }
-
-        .mood-title {
-            font-size: 16px;
         }
 
         .header-icon svg {
