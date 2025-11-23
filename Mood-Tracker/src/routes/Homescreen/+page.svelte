@@ -1,5 +1,6 @@
 <script lang="ts">
 	import PopupEnd from "../popupEnd.svelte";
+	import MoodTracker from "./MoodTracker.svelte";
 	import { goto } from "$app/navigation";
 	import { base } from "$app/paths";
 	import { tasksStore } from "$lib/stores/tasks.js";
@@ -33,62 +34,11 @@
 		todos = value;
 	});
 
-	let moodData = $state([
-		{ day: "MON", value: 3 },
-		{ day: "TUE", value: 1 },
-		{ day: "WED", value: 4 },
-		{ day: "THU", value: 2 },
-		{ day: "FRI", value: 5 },
-		{ day: "SAT", value: 4 },
-		{ day: "SUN", value: 5 },
-	]);
-
 	function toggleTodo(id: number) {
 		const updatedTodos = todos.map((todo) =>
 			todo.id === id ? { ...todo, completed: !todo.completed } : todo,
 		);
 		tasksStore.set(updatedTodos);
-	}
-
-	// Get SVG for mood face based on value
-	function getMoodFaceSVG(value: number): string {
-		const faces = {
-			1: `<svg viewBox="0 0 48 48" class="mood-face">
-                    <circle cx="24" cy="24" r="22" fill="#EF4444" stroke="#DC2626" stroke-width="2"/>
-                    <circle cx="16" cy="20" r="2.5" fill="#7F1D1D"/>
-                    <circle cx="32" cy="20" r="2.5" fill="#7F1D1D"/>
-                    <path d="M 14 32 Q 24 28 34 32" stroke="#7F1D1D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                    <path d="M 12 20 L 16 18" stroke="#7F1D1D" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M 36 20 L 32 18" stroke="#7F1D1D" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>`,
-			2: `<svg viewBox="0 0 48 48" class="mood-face">
-                    <circle cx="24" cy="24" r="22" fill="#FB923C" stroke="#F97316" stroke-width="2"/>
-                    <circle cx="16" cy="20" r="2.5" fill="#7C2D12"/>
-                    <circle cx="32" cy="20" r="2.5" fill="#7C2D12"/>
-                    <path d="M 14 30 Q 24 28 34 30" stroke="#7C2D12" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                </svg>`,
-			3: `<svg viewBox="0 0 48 48" class="mood-face">
-                    <circle cx="24" cy="24" r="22" fill="#FBBF24" stroke="#F59E0B" stroke-width="2"/>
-                    <circle cx="16" cy="20" r="2.5" fill="#78350F"/>
-                    <circle cx="32" cy="20" r="2.5" fill="#78350F"/>
-                    <line x1="14" y1="30" x2="34" y2="30" stroke="#78350F" stroke-width="2.5" stroke-linecap="round"/>
-                </svg>`,
-			4: `<svg viewBox="0 0 48 48" class="mood-face">
-                    <circle cx="24" cy="24" r="22" fill="#A3E635" stroke="#84CC16" stroke-width="2"/>
-                    <circle cx="16" cy="20" r="2.5" fill="#365314"/>
-                    <circle cx="32" cy="20" r="2.5" fill="#365314"/>
-                    <path d="M 14 28 Q 24 32 34 28" stroke="#365314" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                </svg>`,
-			5: `<svg viewBox="0 0 48 48" class="mood-face">
-                    <circle cx="24" cy="24" r="22" fill="#4ADE80" stroke="#22C55E" stroke-width="2"/>
-                    <circle cx="16" cy="18" r="3" fill="#14532D"/>
-                    <circle cx="32" cy="18" r="3" fill="#14532D"/>
-                    <path d="M 12 26 Q 24 34 36 26" stroke="#14532D" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                    <path d="M 14 18 Q 12 14 10 16" stroke="#14532D" stroke-width="2" fill="none" stroke-linecap="round"/>
-                    <path d="M 34 18 Q 36 14 38 16" stroke="#14532D" stroke-width="2" fill="none" stroke-linecap="round"/>
-                </svg>`,
-		};
-		return faces[value as keyof typeof faces] || faces[3];
 	}
 </script>
 
@@ -134,80 +84,8 @@
 			</div>
 		</section>
 
-		<!-- Mood Graph Section -->
-		<section class="mood-graph-section">
-			<div class="mood-header">
-				<div class="mood-icon"></div>
-				<h2 class="section-title">This Week's Mood Graph</h2>
-				<button
-					onclick={OnClickNavigateMoodScreen}
-					class="add-mood-btn"
-					aria-label="Add mood entry"
-				>
-				</button>
-			</div>
-
-			<div class="mood-chart">
-				<!-- Mood faces scale -->
-				<div class="mood-scale">
-					{#each [5, 4, 3, 2, 1] as value}
-						<div class="mood-emoji">
-							{@html getMoodFaceSVG(value)}
-						</div>
-					{/each}
-				</div>
-
-				<!-- Graph area with SVG and day labels -->
-				<div class="graph-area">
-					<div class="svg-wrapper">
-						<svg viewBox="0 0 100 60" class="mood-svg">
-							<polyline
-								fill="none"
-								stroke="#8B5CF6"
-								stroke-width="2"
-								points={moodData
-									.map((data, i) => {
-										const x =
-											(i * 100) / (moodData.length - 1);
-										const y =
-											10 + ((5 - data.value) / 4) * 40;
-										return `${x},${y}`;
-									})
-									.join(" ")}
-							/>
-							{#each moodData as data, i}
-								<circle
-									cx={(i * 100) / (moodData.length - 1)}
-									cy={10 + ((5 - data.value) / 4) * 40}
-									r="5"
-									fill="#8B5CF6"
-									stroke="#fff"
-									stroke-width="2"
-								/>
-							{/each}
-						</svg>
-						<!-- Day labels grid, perfectly aligned with SVG points -->
-						<div class="day-labels-grid">
-							{#each moodData as data, i}
-								<span
-									class="day-label"
-									style="grid-column: {i + 1}"
-									>{data.day}</span
-								>
-							{/each}
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- Mood graph edit button -->
-			<button
-				onclick={OnClickNavigateMoodScreen}
-				class="edit-btn"
-				style="margin-top: 1.5rem;"
-			>
-				EDIT
-			</button>
-		</section>
+		<!-- NEW: Simplified Daily Mood Tracker Component -->
+		<MoodTracker onEditClick={OnClickNavigateMoodScreen}/>
 
 		<!-- Mindfulness Exercises Section -->
 		<section class="mindfulness-section">
@@ -222,7 +100,7 @@
 				<div class="exercise-arrow">➜</div>
 			</button>
 
-			<button class="exercise-card yoga-card">
+			<button onclick={OnClickNavigateYogaScreen} class="exercise-card yoga-card">
 				<div class="exercise-icon"></div>
 				<span class="exercise-text">YOGA EXERCISES</span>
 				<div class="exercise-arrow">➜</div>
@@ -368,81 +246,12 @@
 		border-radius: var(--radius-md);
 		width: 100%;
 		box-shadow: var(--shadow-md);
+		border: none;
+		cursor: pointer;
 	}
 
 	.edit-btn:hover {
 		background: #38bdf8;
-	}
-
-	/* Mood Graph Section */
-	.mood-graph-section {
-		background: white;
-		border-radius: var(--radius-xl);
-		padding: var(--spacing-lg);
-		box-shadow: var(--shadow-lg);
-		margin-bottom: var(--spacing-lg);
-	}
-
-	.mood-header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		margin-bottom: var(--spacing-md);
-	}
-
-	.mood-icon {
-		font-size: 2rem;
-	}
-
-	.add-mood-btn {
-		background: transparent;
-		font-size: 1.5rem;
-		padding: var(--spacing-xs);
-	}
-
-	.mood-chart {
-		display: flex;
-		gap: var(--spacing-md);
-	}
-
-	.mood-scale {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		padding: var(--spacing-sm) 0;
-	}
-
-	.mood-emoji {
-		width: 40px;
-		height: 40px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	:global(.mood-face) {
-		width: 36px;
-		height: 36px;
-		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-	}
-
-	.graph-area {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-	}
-
-	.mood-svg {
-		width: 100%;
-		height: 150px;
-	}
-
-	.day-label {
-		font-size: var(--font-size-sm);
-		color: #8b5cf6;
-		font-weight: var(--font-weight-semibold);
-		text-align: center;
-		flex: 1;
 	}
 
 	/* Mindfulness Section */
@@ -464,6 +273,8 @@
 		color: white;
 		font-weight: var(--font-weight-bold);
 		font-size: var(--font-size-base);
+		border: none;
+		cursor: pointer;
 	}
 
 	.exercise-card:last-child {
@@ -498,42 +309,5 @@
 
 	.exercise-arrow {
 		font-size: 1.5rem;
-	}
-
-	.svg-wrapper {
-		position: relative;
-		width: 100%;
-		overflow: visible;
-		margin: 0;
-		padding: 0;
-	}
-
-	.mood-svg {
-		width: 100%;
-		height: 150px;
-		display: block;
-		margin: 0;
-		padding: 0;
-	}
-
-	.day-labels-grid {
-		display: grid;
-		grid-template-columns: repeat(7, 1fr);
-		position: absolute;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		width: 100%;
-		padding: 0;
-		pointer-events: none;
-	}
-
-	.day-label {
-		text-align: center;
-		color: #8b5cf6;
-		font-weight: var(--font-weight-semibold);
-		font-size: var(--font-size-sm);
-		padding-top: 8px;
-		margin: 0;
 	}
 </style>
