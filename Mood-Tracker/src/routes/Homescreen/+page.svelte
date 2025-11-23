@@ -235,7 +235,6 @@
 
 <style>
 	.page-container {
-		min-height: 100vh;
 		background: linear-gradient(180deg, #6366f1 0%, #818cf8 100%);
 		padding-bottom: var(--spacing-xl);
 	}

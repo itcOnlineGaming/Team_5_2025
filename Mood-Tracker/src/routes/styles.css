@@ -12,10 +12,6 @@
     margin-bottom: 2rem;
 }
 
-body {
-    overflow: hidden;
-}
-
 /* Popup Styles */
 .popup-overlay {
     position: fixed;
