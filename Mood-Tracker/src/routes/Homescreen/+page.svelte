@@ -1,6 +1,7 @@
 <script lang="ts">
 	import PopupEnd from "../popupEnd.svelte";
 	import MoodTracker from "./MoodTracker.svelte";
+	import TasksModal from "./TasksModal.svelte";
 	import { goto } from "$app/navigation";
 	import { base } from "$app/paths";
 	import { tasksStore } from "$lib/stores/tasks.js";
@@ -11,12 +12,14 @@
 		completed: boolean;
 	};
 
+	let isTasksModalOpen = $state(false);
+
 	function OnClickNavigateMoodScreen() {
 		goto(`${base}/MoodScreen`, { noScroll: false });
 	}
 
-	function OnClickNavigateTasksScreen() {
-		goto(`${base}/TasksScreen`, { noScroll: false });
+	function OnClickOpenTasksModal() {
+		isTasksModalOpen = true;  // Open modal instead of navigating
 	}
 
 	function OnClickNavigateBreathingScreen() {
@@ -78,13 +81,13 @@
 						</li>
 					{/each}
 				</ul>
-				<button onclick={OnClickNavigateTasksScreen} class="edit-btn" style="margin-top: 1.5rem;">
+				<button onclick={OnClickOpenTasksModal} class="edit-btn" style="margin-top: 1.5rem;">
                 EDIT
             </button>
 			</div>
 		</section>
 
-		<!-- NEW: Simplified Daily Mood Tracker Component -->
+		<!-- Simplified Daily Mood Tracker Component -->
 		<MoodTracker onEditClick={OnClickNavigateMoodScreen}/>
 
 		<!-- Mindfulness Exercises Section -->
@@ -109,6 +112,8 @@
 	</div>
 
 	<PopupEnd></PopupEnd>
+
+	<TasksModal bind:isOpen={isTasksModalOpen} />
 </div>
 
 <style>
