@@ -55,8 +55,6 @@
    
 </script>
 
-<button on:click={OnClickNavigateToHomescreen}>Return to Main Screen</button>
-
 <h2> Result Table </h2>
 
 <table>
@@ -83,6 +81,7 @@
     
 </body>
 
+<button onclick={OnClickNavigateToHomescreen}>Return to Main Screen</button>
 
 <style>
   table 

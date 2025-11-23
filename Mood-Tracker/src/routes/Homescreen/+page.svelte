@@ -143,7 +143,14 @@
 			EDIT ✏️
 		</button>
 	</section>
+
+	<section class="breathing-section">
+    <button onclick={OnClickNavigateBreathingScreen} class="edit-btn">
+        BREATHING EXERCISES 
+    </button>
+</section>
+
 	<PopupEnd></PopupEnd>
 </div>
 
-<button onclick={OnClickNavigateBreathingScreen}>Breathing Screen</button>
+<!---button onclick={OnClickNavigateBreathingScreen}>Breathing Screen</button> --->
