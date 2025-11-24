@@ -138,167 +138,167 @@
 </div>
 
 <button class="confirmButton" on:click={sendFeedback}>{label}</button>
-
 <style>
-    /* Wrapper */
-    .wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 20px;
-        height: 100vh;
-        text-align: center;
-        position: relative; /* for cloud absolute positioning */
-        padding-top: 40px; /* top padding for text */
-    }
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: clamp(16px, 4vh, 40px);
+    min-height: 100dvh; /* better for mobile */
+    text-align: center;
+    position: relative;
+    padding-top: clamp(20px, 6vh, 60px);
+}
 
-    .text {
-    font-size: 2rem;
+/* === TITLE TEXT === */
+.text {
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
     color: white;
-	font-weight: 700;
-    position: relative; 
-    margin-bottom: 90px;
-	}
+    font-weight: 700;
+    position: relative;
+    margin-bottom: clamp(40px, 8vh, 110px);
+    z-index: 2;
+}
 
-    /* Cloud background */
-    .cloud-bg {
+/* === CLOUD BACKGROUND === */
+.cloud-bg {
     position: absolute;
-    top: 45%;
+    top: clamp(20%, 32vh, 42%);
     left: 50%;
-    transform: translateX(-52%) translateY(-60%);
-    width: 570px;
-    height: 550px;
+    transform: translate(-50%, -50%);
+    width: clamp(250px, 40vw, 600px);
+    aspect-ratio: 1 / 1; /* or use the actual ratio if you know it */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     z-index: -1;
     opacity: 0.9;
-	}
+}
 
-    /* Circle container */
-    .circle-container {
+/* === CIRCLE CONTAINER === */
+.circle-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 16px;
-    margin-top: 50px; /* push circles down below cloud */
-	}
+    gap: clamp(10px, 3vw, 25px);
+    margin-top: clamp(20px, 8vh, 70px);
+}
 
+/* === EACH CIRCLE WRAPPER === */
+.circle-wrapper {
+    position: relative;
+    display: inline-block;
+}
 
-    /* Each circle wrapper */
-    .circle-wrapper {
-        position: relative;
-        display: inline-block;
-    }
+/* === CIRCLES === */
+.circle {
+    width: clamp(45px, 6vw, 75px);
+    height: clamp(45px, 6vw, 75px);
+    border-radius: 50%;
+    background-image: var(--hover-image);
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    transition: transform 0.15s ease, outline 0.15s ease;
+}
 
-    /* Image circles */
-    .circle {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background-image: var(--hover-image);
-        background-size: cover;
-        background-position: center;
-        cursor: pointer;
-        transition: transform 0.15s ease, outline 0.15s ease;
-    }
+.circle:hover {
+    transform: scale(1.1);
+}
 
-    .circle:hover {
-        transform: scale(1.1);
-    }
+.circle.selected {
+    outline: 4px solid #ffffff;
+    transform: scale(1.15);
+}
 
-    .circle.selected {
-        outline: 4px solid #ffffff;
-        transform: scale(1.15);
-    }
+/* === SPEECH BUBBLE === */
+.speech-bubble {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: clamp(6px, 1vh, 12px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+}
 
-    /* Speech bubble */
-    .speech-bubble {
-        position: absolute;
-        bottom: 100%; /* above the circle */
-        left: 50%;
-        transform: translateX(-50%);
-        margin-bottom: 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        pointer-events: none;
-    }
+.speech-bubble .box {
+    background: rgba(50, 50, 250, 0.8);
+    color: white;
+    padding: 0.5em 1em;
+    border-radius: 0.4em;
+    font-size: clamp(0.7rem, 1.3vw, 1rem);
+    text-align: center;
+    white-space: nowrap;
+}
 
-    .speech-bubble .box {
-        background: rgba(50, 50, 250, 0.8);
-        color: white;
-        padding: 0.5em 1em;
-        border-radius: 0.4em;
-        font-size: 0.85rem;
-        text-align: center;
-        white-space: nowrap;
-    }
+.speech-bubble .speech-arrow {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid rgba(50, 50, 250, 0.8);
+}
 
-    .speech-bubble .speech-arrow {
-        width: 0;
-        height: 0;
-        border-left: 6px solid transparent;
-        border-right: 6px solid transparent;
-        border-top: 6px solid rgba(50, 50, 250, 0.8);
-    }
+/* === SLIDER === */
+.slider-container {
+    width: clamp(240px, 40vw, 400px);
+    display: flex;
+    justify-content: center;
+}
 
-    /* Slider */
-    .slider-container {
-        width: 350px;
-        display: flex;
-        justify-content: center;
-    }
+.slider {
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(to right, 
+        red 0%, red 20%, 
+        orange 20%, orange 40%, 
+        yellow 40%, yellow 60%,
+        green 60%, green 80%,
+        lightgreen 80%, lightgreen 100%
+    );
+    border-radius: 5px;
+    outline: none;
+}
 
-    .slider {
-        width: 100%;
-        height: 10px;
-        background: linear-gradient(to right, 
-            red 0%, red 20%, 
-            orange 20%, orange 40%, 
-            yellow 40%, yellow 60%,
-            green 60%, green 80%,
-            lightgreen 80%, lightgreen 100%
-        );
-        border-radius: 5px;
-        outline: none;
-    }
+.slider::-webkit-slider-thumb,
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
+    border: 2px solid #888;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
 
-    .slider::-webkit-slider-thumb,
-    .slider::-moz-range-thumb {
-        width: 20px;
-        height: 20px;
-        background: #ffffff;
-        border: 2px solid #888;
-        border-radius: 50%;
-        cursor: pointer;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
+/* === BUTTONS === */
+.continueButton {
+    margin-top: clamp(10px, 2vh, 20px);
+    padding: 0.6em 2em;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 0.4em;
+    cursor: pointer;
+    font-size: clamp(0.9rem, 1.3vw, 1.2rem);
+}
 
-    /* Buttons */
-    .continueButton {
-        margin-top: 10px;
-        padding: 0.6em 2em;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 0.4em;
-        cursor: pointer;
-        font-size: 1.1em;
-    }
+.continueButton:hover {
+    background-color: #45a049;
+}
 
-    .continueButton:hover {
-        background-color: #45a049;
-    }
-
-    .confirmButton {
-        margin-top: 20px;
-        background: rgba(50, 50, 250, 0.507);
-        padding: 0.5em 1.5em;
-        border-radius: 0.3em;
-        color: white;
-        border: none;
-        cursor: pointer;
-    }
+.confirmButton {
+    margin-top: clamp(15px, 3vh, 30px);
+    background: rgba(50, 50, 250, 0.507);
+    padding: 0.5em 1.5em;
+    border-radius: 0.3em;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+}
 </style>
