@@ -1,5 +1,6 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
+    import { base } from "$app/paths";
     import { tasksBreathingStore } from '$lib/stores/tasks.js';
     import { get } from 'svelte/store';
     import { onDestroy } from 'svelte';
@@ -30,10 +31,13 @@
         interval = setInterval(() => {
             if (timer > 0) {
                 timer -= 1;
-            } else {
+            } else 
+            {
                 clearInterval(interval);
                 b_isTimerRunning = false;
                 console.log("Timer finished!");
+                // Toggle a bool in the Task.JS for exercise completion
+                NavigateToHomescreen();
             }
         }, 1000);
     }
@@ -56,7 +60,7 @@
 
     function NavigateToHomescreen() 
     {
-        goto("/Homescreen", { noScroll: false });
+        goto(`${base}/Homescreen`, { noScroll: false });
     }
 
     onDestroy(() => {
@@ -80,7 +84,7 @@
         <div class="dynamic-circle"></div>
     </div>
 
-    <p class="instruction-text">Match your breathing to the rhythm</p>
+    <p class="instruction-text">| Match your breathing to the rhythm |</p>
 
     <!-- Timer Controls -->
     <div class="timer-buttons">
@@ -120,7 +124,7 @@
         width: 80px;
         height: 80px;
         border-radius: 50%;
-        background-color: #8B5CF6;
+        background-color: #5cb8f6;
         z-index: 2;
     }
 
@@ -196,9 +200,10 @@
     .instruction-text 
     {
         text-align: center;
-        font-size: 1.5rem;
-        color: #555;
-        margin-top: 1.5rem;
+        font-size: 1.2rem;
+        color: rgb(0, 0, 0)f0f;
+        margin-top: 5.0rem;
+        margin-bottom: 5.0rem;
     }
 
     .exit-btn:hover 

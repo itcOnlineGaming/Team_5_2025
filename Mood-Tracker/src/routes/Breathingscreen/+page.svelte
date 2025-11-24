@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
+	import { goto } from "$app/navigation";
+	import { base } from "$app/paths";
     import { tasksBreathingStore } from '$lib/stores/tasks.js';
 
     let number_input = 0;
@@ -28,7 +29,7 @@
     {
         if (b_isTriggerSet) 
         {
-            goto("/BreathingExerciseScreen", { noScroll: false });
+            goto(`${base}/BreathingExerciseScreen`, { noScroll: false });
         } else 
         {
             console.log("Please select a timer first");
