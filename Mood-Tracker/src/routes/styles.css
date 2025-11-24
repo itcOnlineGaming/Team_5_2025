@@ -24,10 +24,12 @@
     align-items: center;
     justify-content: center;
     z-index: 1000;
+    color: #000;
+    text-shadow: 1.5px 0 0 #fff, 0 -1.5px 0 #fff, 0 1.5px 0 #fff, -1.5px 0 0 #fff;
 }
 
 .popup {
-    background: #E9D5FF;
+    background: #e4cbff;
     padding: 2rem;
     border-radius: 8px;
     max-width: 400px;
