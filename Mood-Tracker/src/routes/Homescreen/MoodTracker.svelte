@@ -94,7 +94,7 @@
 
   </div>
 
-    <button on:click={onEditClick} class="edit-btn">EDIT</button>
+    <button on:click={onEditClick} class="edit-btn">ADD MOOD</button>
 </section>
 
 <style>

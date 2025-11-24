@@ -96,7 +96,7 @@
 					class="edit-btn"
 					style="margin-top: 1.5rem;"
 				>
-					EDIT
+					EDIT TASKS
 				</button>
 			</div>
 		</section>
