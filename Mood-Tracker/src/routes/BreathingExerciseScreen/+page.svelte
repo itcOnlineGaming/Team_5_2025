@@ -4,6 +4,7 @@
     import { tasksBreathingStore } from '$lib/stores/tasks.js';
     import { get } from 'svelte/store';
     import { onDestroy } from 'svelte';
+    import { onMount } from 'svelte';
 
     let timer = 0;
     let b_isTriggered = false;
@@ -15,6 +16,8 @@
         {
             timer = value.timer_number * 60;
             b_isTriggered = value.b_isTriggered;
+
+            startTimer();
         }
         // Test if it's actually getting passed 
          console.log("Breathing store loaded:", value);
@@ -201,7 +204,7 @@
     {
         text-align: center;
         font-size: 1.2rem;
-        color: rgb(0, 0, 0)f0f;
+        color: black;
         margin-top: 5.0rem;
         margin-bottom: 5.0rem;
     }

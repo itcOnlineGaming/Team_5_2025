@@ -132,8 +132,8 @@
 .instruction-text 
 {
     text-align: center;
-    font-size: 1.5rem;
-    color: #555;
+    font-size: 1.6rem;
+    color: #220c0c;
     margin-top: 1.5rem;
 }
 
