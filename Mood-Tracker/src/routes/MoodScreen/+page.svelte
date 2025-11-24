@@ -1,130 +1,129 @@
 <script lang="ts">
     import { onMount } from "svelte";
-	import { base } from "$app/paths";
+    import { base } from "$app/paths";
+    import { goto } from "$app/navigation";
+
+    import red from "$lib/assets/RedMood.png";
+    import orange from "$lib/assets/OrangeMood.png";
+    import yellow from "$lib/assets/YellowMood.png";
+    import lime from "$lib/assets/LimeMood.png";
+    import green from "$lib/assets/GreenMood.png";
+    import cloud from "$lib/assets/Cloud.png";
+
+    const moodColors = [red, orange, yellow, lime, green];
 
     let timeElapsed = 0;
     let timer: ReturnType<typeof setInterval> | null = null;
     let timerRunning = false;
 
-   onMount(() => {
-	console.log("Timer started");
-	timerRunning = true;
+    onMount(() => {
+        console.log("Timer started");
+        timerRunning = true;
 
-	timer = setInterval(() => {
-		if (timerRunning) {
-			timeElapsed += 1;
-		}
-	}, 1000);
+        timer = setInterval(() => {
+            if (timerRunning) {
+                timeElapsed += 1;
+            }
+        }, 1000);
 
-	return () => {
-		if (timer) clearInterval(timer);
-	};
-});
+        return () => {
+            if (timer) clearInterval(timer);
+        };
+    });
 
-	const colors: string[] = ['red', 'orange', 'yellow', 'green', 'lightgreen'];
-	let selectedIndex: number | null = null;
-	let sliderValue = 0;
-
-	function handleClick(index: number) {
-		selectedIndex = index;
-
-        if (timerRunning) {
-		timerRunning = false;
-		if (timer) clearInterval(timer);
-		console.log(`⏱️ Time taken: ${timeElapsed} seconds`);
-	} else {
-		console.warn("Timer was not running!");
-	}
-        showContinueButton = true;
-	}
-
-    import { goto } from "$app/navigation";
-
-
-	let label: string = "Confirm";
+    let selectedIndex = 0;
+    let sliderValue = 0;
+    let label: string = "Confirm";
     let showContinueButton: boolean = false;
 
-      function ToHomeScreen()
-    {
-        showContinueButton = false;
-        console.log("Confirm Button Clicked");
-        goto(`${base}/Homescreen`, { noScroll: false });
+    function handleClick(index: number) {
+        selectedIndex = index;
+
+        if (timerRunning) {
+            timerRunning = false;
+            if (timer) clearInterval(timer);
+            console.log(`⏱️ Time taken: ${timeElapsed} seconds`);
+        } else {
+            console.warn("Timer was not running!");
+        }
+
+        showContinueButton = true;
     }
+
+    function goToResult() {
+    if (selectedIndex !== null) {
+        goto(`${base}/MoodScreen/MoodResponse?mood=${selectedIndex}`);
+    } else {
+        alert("Please select a mood first.");
+    }
+}
 
     function sendFeedback() {
         label = "You are feeling quite great currently!";
-    };
+    }
 
-	// Speech Bubble
-	// 1 = most stressed, 5 = least stressed
-    let message_1 = "I'm feeling overwhelmed";
-    let message_2 = "Might need a break";
-    let message_3 = "I'm indifferent";
-    let message_4 = "I'm feeling good";
-    let message_5 = "I'm very confident in making progress";
+    // Speech bubble messages
+    let messages = [
+        "I'm feeling overwhelmed",
+        "Might need a break",
+        "I'm indifferent",
+        "I'm feeling good",
+        "I'm very confident in making progress"
+    ];
 
     let message_selection = "";
+    let b_isMessageVisible = false;
 
-	let num: number = 1;
-    // Change what output text will  be 
-    export function messageChanger(num: number)
-    {
-        switch (num)
-        {
-            case 1:
-                message_selection = message_1;
-                break;
-            case 2:
-                message_selection = message_2;
-                break;
-            case 3:
-                message_selection = message_3;
-                break;
-            case 4:
-                message_selection = message_4;
-                break;
-            case 5:
-                message_selection = message_5;
-                break;
-        }
+    export function messageChanger(num: number) {
+        message_selection = messages[num - 1] || "";
+        b_isMessageVisible = true;
     }
 
-	// Message Position (add export in front for testing later)
-    function message_position()
-    {
-		// Place under what Icon was selected
-    }
-
-    // Message Visibility (add export in front for testing later)
-    let b_isMessageVisible = true;
-    function messageVisToggle()
-    {
+    function messageVisToggle() {
         b_isMessageVisible = !b_isMessageVisible;
     }
 
-	// Function to handle slider input from user
-	function handleSlide(event: Event) {
+    function handleSlide(event: Event) {
     const slider = event.target as HTMLInputElement;
     const value = Number(slider.value);
 
-	// Uncomment the line below to sync slider with selected circle
-    selectedIndex = Math.floor((value / 100) * colors.length);
+    const newIndex = Math.min(
+        Math.floor((value / 100) * moodColors.length),
+        moodColors.length - 1
+    );
+
+    if (newIndex !== selectedIndex) {
+        selectedIndex = newIndex;
+    }
+	
 }
 </script>
 
 <div class="wrapper">
-	<div class="text">How are you feeling today?</div>
-	<div class="circle-container">
-		{#each colors as color, index}
-			<div
-				class="circle {selectedIndex === index ? 'selected' : ''}"
-				style="--hover-color: {color};"
-				on:click={() => handleClick(index)}
-			></div>
-		{/each}
-	</div>
+    <div class="text">How are you feeling today?</div>
 
-	<div class="slider-container">
+    <div class="cloud-bg" style="background-image: url({cloud});"></div>
+
+    <div class="circle-container">
+    {#each moodColors as color, index}
+        <div class="circle-wrapper">
+            <div
+                class="circle {selectedIndex === index ? 'selected' : ''}"
+                style="--hover-image: url({color});"
+                on:click={() => handleClick(index)}
+            ></div>
+
+            {#if selectedIndex === index}
+                <div class="speech-bubble">
+                    <div class="box">{messages[index]}</div>
+                    <div class="speech-arrow"></div>
+                </div>
+            {/if}
+        </div>
+    {/each}
+</div>
+
+    <div class="slider-container">
         <input 
             type="range" 
             min="0" 
@@ -135,139 +134,137 @@
         />
     </div>
 
-    <button class="continueButton" on:click={ToHomeScreen}>Continue</button>
+    <button class="continueButton" on:click={goToResult}>Continue</button>
 </div>
 
-<button class="confirmButton" on:click={sendFeedback}>
-    {label}
-</button>
-
-
-
-
-<!-- Speech Bubble -->
-{#if b_isMessageVisible == true}
-    <div class="speech-bubble">
-        <div class="box">
-            {message_selection}
-        </div>
-	<div class="speech-arrow"></div>
-</div>
-{/if}
-
+<button class="confirmButton" on:click={sendFeedback}>{label}</button>
 <style>
-	.wrapper {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		height: 100vh;
-		text-align: center;
-	}
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: clamp(16px, 4vh, 40px);
+    min-height: 100dvh; /* better for mobile */
+    text-align: center;
+    position: relative;
+    padding-top: clamp(20px, 6vh, 60px);
+}
 
-	.text {
-		font-size: 2rem;
-		margin-bottom: 20px;
-	}
+/* === TITLE TEXT === */
+.text {
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+    color: white;
+    font-weight: 700;
+    position: relative;
+    margin-bottom: clamp(40px, 8vh, 110px);
+    z-index: 2;
+}
 
-	.circle-container {
-		display: flex;
-		gap: 16px;
-	}
+/* === CLOUD BACKGROUND === */
+.cloud-bg {
+    position: absolute;
+    top: clamp(20%, 32vh, 42%);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(250px, 40vw, 600px);
+    aspect-ratio: 1 / 1; /* or use the actual ratio if you know it */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+    opacity: 0.9;
+}
 
-	.circle {
-		width: 60px;
-		height: 60px;
-		border-radius: 50%;
-		background-color: grey;
-		transition: background-color 0.3s ease;
-		cursor: pointer;
-	}
+/* === CIRCLE CONTAINER === */
+.circle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(10px, 3vw, 25px);
+    margin-top: clamp(20px, 8vh, 70px);
+}
 
-	.circle:not(.selected):hover {
-		background-color: var(--hover-color);
-	}
+/* === EACH CIRCLE WRAPPER === */
+.circle-wrapper {
+    position: relative;
+    display: inline-block;
+}
 
-	.circle.selected {
-		background-color: var(--hover-color);
-	}
+/* === CIRCLES === */
+.circle {
+    width: clamp(45px, 6vw, 75px);
+    height: clamp(45px, 6vw, 75px);
+    border-radius: 50%;
+    background-image: var(--hover-image);
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    transition: transform 0.15s ease, outline 0.15s ease;
+}
 
-	.confirmButton {
-        background: rgba(50, 50, 250, 0.507);
-    }
+.circle:hover {
+    transform: scale(1.1);
+}
 
-	/* Container to hold triangle and box */
-	.speech-bubble 
-    {
-		display: flex;
-		flex-direction: column; /* puts triangle under the box */
-		align-items: center;
-	}
+.circle.selected {
+    outline: 4px solid #ffffff;
+    transform: scale(1.15);
+}
 
-	/* Triangle below the box */
-	.speech-arrow 
-    {
-		width: 0;
-		height: 0;
-		border-left: 1em solid transparent;
-		border-right: 1em solid transparent;
-		border-top: 1em solid #5964c9; 
-	}
+/* === SPEECH BUBBLE === */
+.speech-bubble {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: clamp(6px, 1vh, 12px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+}
 
-	/* Speech bubble box */
-	.box 
-    {
-        display:none;
-		width: 15em;
-		min-height: 5em;
-		border-radius: 0.5em;
-		padding: 1em;
-		background-color: #5964c9;
-		color: white;
-		font-family: Arial, sans-serif;
-		text-align: center;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 100vh;
-		text-align: center;
-	}
+.speech-bubble .box {
+    background: rgba(50, 50, 250, 0.8);
+    color: white;
+    padding: 0.5em 1em;
+    border-radius: 0.4em;
+    font-size: clamp(0.7rem, 1.3vw, 1rem);
+    text-align: center;
+    white-space: nowrap;
+}
 
-	.slider-container {
-    width: 328px; /* Matches 5 circles (60px each) + 4 gaps (16px each) */
-    margin-top: 20px;
+.speech-bubble .speech-arrow {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid rgba(50, 50, 250, 0.8);
+}
+
+/* === SLIDER === */
+.slider-container {
+    width: clamp(240px, 40vw, 400px);
+    display: flex;
+    justify-content: center;
 }
 
 .slider {
     width: 100%;
     height: 10px;
     background: linear-gradient(to right, 
-        red 0%, 
-        red 20%, 
-        orange 20%, 
-        orange 40%, 
-        yellow 40%, 
-        yellow 60%,
-        green 60%,
-        green 80%,
-        lightgreen 80%,
-        lightgreen 100%
+        red 0%, red 20%, 
+        orange 20%, orange 40%, 
+        yellow 40%, yellow 60%,
+        green 60%, green 80%,
+        lightgreen 80%, lightgreen 100%
     );
     border-radius: 5px;
     outline: none;
 }
 
-.slider::-webkit-slider-thumb {
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    background: #ffffff;
-    border: 2px solid #888;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
+.slider::-webkit-slider-thumb,
 .slider::-moz-range-thumb {
     width: 20px;
     height: 20px;
@@ -278,19 +275,30 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-
+/* === BUTTONS === */
 .continueButton {
-	margin-top: 1em;
-	padding: 0.5em 1.5em;
-	background-color: #4CAF50;
-	color: white;
-	border: none;
-	border-radius: 0.3em;
-	cursor: pointer;
-	font-size: 1em;
+    margin-top: clamp(10px, 2vh, 20px);
+    padding: 0.6em 2em;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 0.4em;
+    cursor: pointer;
+    font-size: clamp(0.9rem, 1.3vw, 1.2rem);
 }
 
 .continueButton:hover {
-	background-color: #45a049;
+    background-color: #45a049;
+}
+
+.confirmButton {
+    margin-top: clamp(15px, 3vh, 30px);
+    background: rgba(50, 50, 250, 0.507);
+    padding: 0.5em 1.5em;
+    border-radius: 0.3em;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: clamp(0.9rem, 1.3vw, 1.1rem);
 }
 </style>
