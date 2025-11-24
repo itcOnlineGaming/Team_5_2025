@@ -2,6 +2,7 @@
 	import PopupEnd from "../popupEnd.svelte";
 	import MoodTracker from "./MoodTracker.svelte";
 	import TasksModal from "./TasksModal.svelte";
+	import ProgressIndicator from "./ProgressIndicator.svelte";
 	import { goto } from "$app/navigation";
 	import { base } from "$app/paths";
 	import { tasksStore } from "$lib/stores/tasks.js";
@@ -30,25 +31,26 @@
 		goto(`${base}/YogaScreen`, { noScroll: false });
 	}
 
-	let todos = $state<Todo[]>([]);
+	let tasks = $state<Array<{ id: number; text: string; completed: boolean }>>(
+		[],
+	);
 
-	// Subscribe to the tasks store
 	tasksStore.subscribe((value) => {
-		todos = value;
+		tasks = value;
 	});
 
 	// Calculate progress percentage
 	let progressPercentage = $derived(() => {
-		if (todos.length === 0) return 0;
-		const completedTasks = todos.filter((todo) => todo.completed).length;
-		return Math.round((completedTasks / todos.length) * 100);
+		if (tasks.length === 0) return 0;
+		const completedTasks = tasks.filter((task) => task.completed).length;
+		return Math.round((completedTasks / tasks.length) * 100);
 	});
 
-	function toggleTodo(id: number) {
-		const updatedTodos = todos.map((todo) =>
-			todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+	function toggleTask(id: number) {
+		const updatedTasks = tasks.map((task) =>
+			task.id === id ? { ...task, completed: !task.completed } : task,
 		);
-		tasksStore.set(updatedTodos);
+		tasksStore.set(updatedTasks);
 	}
 </script>
 
@@ -77,16 +79,16 @@
 			<h2 class="section-title">Today's To-do List</h2>
 			<div class="todo-card">
 				<ul class="todo-list">
-					{#each todos as todo (todo.id)}
+					{#each tasks as task (task.id)}
 						<li class="todo-item">
-							<span class:completed={todo.completed}
-								>{todo.text}</span
+							<span class:completed={task.completed}
+								>{task.text}</span
 							>
 							<input
 								type="checkbox"
-								checked={todo.completed}
-								onchange={() => toggleTodo(todo.id)}
-								aria-label={`Mark ${todo.text} as ${todo.completed ? "incomplete" : "complete"}`}
+								checked={task.completed}
+								onchange={() => toggleTask(task.id)}
+								aria-label={`Mark ${task.text} as ${task.completed ? "incomplete" : "complete"}`}
 							/>
 						</li>
 					{/each}
