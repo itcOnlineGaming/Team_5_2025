@@ -1,6 +1,7 @@
 <!--- Exit Sceen -->
 <script lang="ts">
 	import { goto } from "$app/navigation";
+  import { base } from "$app/paths";
   import { tasksSubmissionStore } from '$lib/stores/tasks.js';
   import { derived } from 'svelte/store';
   // Timer import
@@ -9,15 +10,10 @@
   // Grab the data from the .JS file
   const submission = derived(tasksSubmissionStore, $store => $store);
   
-
-
-    function OnClickNavigateToHomescreen()
-    {
-        console.log("Confirm Button Clicked");
-        goto("/", {noScroll:false});
-
-    }
-
+  function NavigateToHomescreen() 
+  {
+      goto(`${base}/Homescreen`, { noScroll: false });
+  }
     // Test results:
    // let session_results = 
    // [
@@ -58,12 +54,15 @@
         //last_time = time;
     });
 
+
    
 </script>
 
-<button onclick={OnClickNavigateToHomescreen}>Return to Main Screen</button>
 
-<h2> Result Table </h2>
+<div class="container">
+    <h1 class="title-Exit"> Result Table</h1>
+</div>
+
 
 <table>
   <thead>
@@ -84,36 +83,60 @@
   </tbody>
 </table>
 
-<body> 
-    <h1> Goodbye! </h1>
-    
-</body>
 
+<div class="container">
+   <h1 class="title">Thank you for testing</h1>
+    <h1 class="title">Goodbye!</h1>
+</div>
+
+<button class="exit-btn" on:click={NavigateToHomescreen}>Go Back to Home</button>
 
 <style>
+  /* Table CSS */
   table 
   {
-    width: 100%;
+    width: 50%;
     border-collapse: collapse;
+    margin: 0 auto; 
   }
   th, td 
   {
-    border: 1px solid #241414;
+    border: 1px solid #181231;
     padding: 0.5rem;
     text-align: left;
   }
+
   th 
   {
     background-color: #aaaaaa;
+    border-bottom: 2px solid #000531;
+  }
+  tr
+  {
+    background-color: #d4d4d4;
   }
   tr:nth-child(even) 
   {
     background-color: #d4d4d4;
+    border-bottom: 2px solid #000531;
+  }
+  tr:hover 
+  {
+    background-color: rgb(134, 143, 137);
   }
   body
   {
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(170, 65, 65);
   }
-  
+
+  /* Goodbye text */
+  .instruction-text 
+  {
+      text-align: center;
+      font-size: 1.5rem;
+      color: #555;
+      margin-top: 1.5rem;
+  }
+
 </style>
 
