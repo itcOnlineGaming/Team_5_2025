@@ -27,7 +27,7 @@
     const navigate = (path: string) => goto(path);
 </script>
 
-<div class="container">
+<div class="yoga-container">
     <h1>Yoga Exercise Session</h1>
 
     <!-- Shown Current Exercise -->

@@ -10,7 +10,7 @@
     const navigate = (path: string) => goto(path);
 </script>
 
-<div class="container">
+<div class="yoga-container">
     <h1>Yoga Exercises</h1>
 
     <!-- Selecting Exercises -->
@@ -24,4 +24,7 @@
 
     <!-- Page Navigation -->
     <NextPageButton to={`${base}/YogaScreen/running`} label="Start" navigate={navigate}/>
+
+    <!-- Return to Homescreen -->
+    <NextPageButton to={`${base}/Homescreen`} label="Exit" navigate={navigate}/>
 </div>

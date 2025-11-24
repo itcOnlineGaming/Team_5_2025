@@ -11,7 +11,7 @@
     const navigateRunning = (path: string) => goto(path);
 </script>
 
-<div class="container">
+<div class="yoga-container">
     <h1>Yoga Exercise Results</h1>
 
     <h2>Duration Completed: {$completedTime.toFixed(2)}%</h2>    
