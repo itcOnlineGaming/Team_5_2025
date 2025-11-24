@@ -9,6 +9,7 @@ const defaultTasks = [
 
 export const tasksStore = writable(defaultTasks);
 
+// Breathing Storage
 export const tasksBreathingStore = writable({
     timer_number: 0,
     b_isTriggered: false
