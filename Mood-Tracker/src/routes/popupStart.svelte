@@ -35,11 +35,17 @@
 				<p></p>
 				<h3>User Tests</h3>
 				<h5>
-					When checking out our application, there are 2 tests that you can try and complete:
+					When checking out our application, there are 5 tests that you can try and complete:
 					<p></p>
 					1. Edit the "Today's To-Do List" by removing a task, adding a task, updating a task name and ticking off a task.
 					<p></p>
 					2. Visit the "Mood Screen" and set your current mood to any of the 5 options.
+					<p></p>
+					3. Check out the mood graph and select more moods to see the graph update with your inputs.
+					<p></p>
+					4. Visit the "Breathing Exercise" menu, select a duration and start the timer to breath in sync with the anaimation.
+					<p></p>
+					5. Visit the "Yoga Exercises" menu, select what exercises you want enabled, set a duration and provide your current feeling before and after the exercises.
 				</h5>
 				<p></p>
 				<h3>Consent:</h3>
