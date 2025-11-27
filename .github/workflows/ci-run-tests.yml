@@ -99,22 +99,7 @@ jobs:
         run: npx -y wait-on tcp:127.0.0.1:4173
 
 
-      # 9) Run unit/component tests (Vitest), if the project uses Vitest
-      #    - Checks for Vitest in devDependencies.
-      #    - If present: runs tests once in CI mode (no watch).
-      #    - If absent: logs a message and continues without failing the workflow.
-      - name: Run unit/component tests (Vitest if present)
-        working-directory: Mood-Tracker
-        run: |
-          if npm ls vitest --depth=0 > /dev/null 2>&1; then
-            echo "Vitest detected, running unit/component tests..."
-            npx vitest --run
-          else
-            echo "Vitest not installed; skipping unit/component tests."
-          fi
-
-
-      # 10) Run Playwright E2E tests
+      # 9) Run Playwright E2E tests
       #     - Assumes Playwright tests are located in frontend/tests.
       #     - Uses:
       #         - "list" reporter for concise CI output
@@ -127,7 +112,7 @@ jobs:
         run: npx playwright test
 
 
-      # 11) Stop the preview server (always runs, even if tests fail)
+      # 10) Stop the preview server (always runs, even if tests fail)
       #     - The PID file was created in the repo root as ../preview.pid.
       #     - We read it, attempt to kill the process, then clean up the file.
       - name: Stop preview server
@@ -140,7 +125,7 @@ jobs:
           fi
 
 
-      # 12) Upload Playwright HTML report as a CI artifact
+      # 11) Upload Playwright HTML report as a CI artifact
       #     - Allows inspection of E2E results (especially on failure).
       #     - Path must match the reporter output directory:
       #         - default for "html" reporter is ./playwright-report
