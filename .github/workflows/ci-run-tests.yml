@@ -7,7 +7,7 @@
 # Assumptions:
 #   - Frontend project is in ./frontend
 #   - Uses npm with package-lock.json
-#   - Vite preview runs on port 4173
+#   - Vite preview runs on port 5173
 #   - Playwright tests are in frontend/tests (adjust if needed)
 #   - If a project does not use Vitest or Playwright, the relevant steps will skip gracefully.
 
@@ -81,22 +81,22 @@ jobs:
 
 
       # 7) Start a Vite preview server in the background
-      #    - Serves the built app on port 4173.
+      #    - Serves the built app on port 5173.
       #    - --host 0.0.0.0 binds to all interfaces (safe on the runner).
       #    - Writes the server PID one level up (repo root) as ../preview.pid.
       - name: Start preview server
         working-directory: Mood-Tracker
         run: |
-          npm run preview -- --host 0.0.0.0 --port 4173 &
+          npm run preview -- --host 0.0.0.0 --port 5173 &
           echo $! > ../preview.pid
 
 
       # 8) Wait until the preview port is open before running tests
       #    - Uses "wait-on" via npx without adding it to package.json.
       #    - We probe the TCP port only (no hard-coded base path), so this works
-      #      for any app that listens on 4173 regardless of its URL structure.
+      #      for any app that listens on 5173 regardless of its URL structure.
       - name: Wait for preview to be ready
-        run: npx -y wait-on tcp:127.0.0.1:4173
+        run: npx -y wait-on tcp:127.0.0.1:5173
 
 
       # 9) Run Playwright E2E tests
