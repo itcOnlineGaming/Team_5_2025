@@ -6,6 +6,7 @@
   import { derived } from 'svelte/store';
   // Timer import
   import { onMount } from 'svelte';
+  import html2pdf from "html2pdf.js";
     
   // Grab the data from the .JS file
   const submission = derived(tasksSubmissionStore, $store => $store);
@@ -54,7 +55,24 @@
         //last_time = time;
     });
 
+    
+function downloadPage() 
+{
+    const element = document.body; // or your specific div
 
+    // Tell TypeScript to ignore type checking for options
+    const options: any = 
+    {
+        margin: 0.5,
+        filename: "result.jpeg",
+        image: { type: "jpeg", quality: 1 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" }
+    };
+
+    // Pass the element first, options second
+    html2pdf(element as HTMLElement, options);
+  }
    
 </script>
 
@@ -90,6 +108,8 @@
 </div>
 
 <button class="exit-btn" on:click={NavigateToHomescreen}>Go Back to Home</button>
+<button class="exit-btn" on:click={downloadPage}>Download Page</button>
+
 
 <style>
   /* Table CSS */
