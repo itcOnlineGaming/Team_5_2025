@@ -18,7 +18,7 @@
     "You might need a break.",
     "Good to Know!",
     "Wonderful!",
-    "Thats great to hear!"
+    "Thats great to hear!",
   ];
 
   const taskTexts = [
@@ -26,7 +26,7 @@
     "lets ease the workload today",
     "Let's balance out our progress today",
     "Time to start another productive day",
-    "Let's calculate what tasks we can focus on today"
+    "Let's calculate what tasks we can focus on today",
   ];
 
   let selectedMood: number | null = null;
@@ -43,10 +43,19 @@
     console.log("Confirm Button Clicked");
 
     if (selectedMood !== null) {
-      console.log('Saving mood:', selectedMood);
-      moodEntries.addMood(selectedMood);
+      console.log("Saving mood:", selectedMood);
+      const moodValue = selectedMood;
+      moodEntries.update((entries) => {
+        return [
+          ...entries,
+          {
+            mood: moodValue,
+            timestamp: Date.now(),
+          },
+        ];
+      });
     } else {
-      console.error('No mood selected');
+      console.error("No mood selected");
     }
 
     goto(`${base}/Homescreen`, { noScroll: false });
@@ -54,24 +63,24 @@
 </script>
 
 <div class="result-wrapper">
-    <div class="cloud-bg" style="background-image: url({cloud});"></div>
+  <div class="cloud-bg" style="background-image: url({cloud});"></div>
 
-    {#if selectedMood !== null}
+  {#if selectedMood !== null}
     <img
-        class="mood-image"
-        src={moodColors[selectedMood - 1]}
-        alt="Selected Mood"
+      class="mood-image"
+      src={moodColors[selectedMood - 1]}
+      alt="Selected Mood"
     />
     <div class="mood-text">{moodTexts[selectedMood - 1]}</div>
     <div class="task-text">{taskTexts[selectedMood - 1]}</div>
     <button class="continueButton" on:click={ToHomeScreen}>Continue</button>
-    {:else}
+  {:else}
     <div class="mood-text">Loading...</div>
-    {/if}
+  {/if}
 </div>
 
 <style>
-.result-wrapper {
+  .result-wrapper {
     position: relative;
     width: 100vw;
     height: 100vh;
@@ -82,9 +91,9 @@
     gap: 20px;
     text-align: center;
     background-color: transparent;
-}
+  }
 
-.cloud-bg {
+  .cloud-bg {
     position: absolute;
     top: clamp(20%, 32vh, 42%);
     left: 50%;
@@ -96,41 +105,41 @@
     background-position: center;
     z-index: -1;
     opacity: 0.9;
-}
+  }
 
-.mood-image {
+  .mood-image {
     width: 100px;
     height: 100px;
     transform: translateY(-110%);
     object-fit: cover;
     z-index: 1;
-}
+  }
 
-.mood-text {
+  .mood-text {
     color: rgba(50, 50, 250, 0.8);
     font-size: 1.5rem;
     font-weight: 700;
     max-width: 80%;
     transform: translateY(-350%);
     z-index: 1;
-}
+  }
 
-.task-text {
+  .task-text {
     color: white;
     font-size: 1.5rem;
     font-weight: 700;
     max-width: 80%;
     z-index: 1;
-}
+  }
 
-.continueButton {
+  .continueButton {
     margin-top: 10px;
     padding: 0.6em 2em;
-    background-color: #4CAF50;
+    background-color: #4caf50;
     color: white;
     border: none;
     border-radius: 0.4em;
     cursor: pointer;
     font-size: 1.1em;
-}
+  }
 </style>
