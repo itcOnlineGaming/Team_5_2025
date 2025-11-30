@@ -2,10 +2,13 @@
 	import PopupEnd from "../popupEnd.svelte";
 	import MoodTracker from "./MoodTracker.svelte";
 	import TasksModal from "./TasksModal.svelte";
-	import ProgressIndicator from "./ProgressIndicator.svelte";
+	import ProgressJourney from "./ProgressJourney.svelte";
 	import { goto } from "$app/navigation";
 	import { base } from "$app/paths";
 	import { tasksStore } from "$lib/stores/tasks.js";
+
+	// temporary component for testing visual data in the mood graph:
+	import MoodTestControls from "./MoodTestControls.svelte";
 
 	type Todo = {
 		id: number;
@@ -74,9 +77,11 @@
 			</div>
 		</section>
 
+		<ProgressJourney />
+
 		<!-- Todo List Section -->
 		<section class="todo-section">
-			<h2 class="section-title">Today's To-do List</h2>
+			<h2 class="section-title">Today's To-Do List</h2>
 			<div class="todo-card">
 				<ul class="todo-list">
 					{#each tasks as task (task.id)}
@@ -103,6 +108,7 @@
 			</div>
 		</section>
 
+		<MoodTestControls />
 		<!-- Simplified Daily Mood Tracker Component -->
 		<MoodTracker onEditClick={OnClickNavigateMoodScreen} />
 
