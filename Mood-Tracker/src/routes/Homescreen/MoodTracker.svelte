@@ -23,20 +23,56 @@
     return date.getHours() + date.getMinutes() / 60;
   }
 
-  // Format time for display
-  function formatTime(timestamp: number): string {
-    const date = new Date(timestamp);
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    const displayHours = hours % 12 || 12;
-    return `${displayHours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+  // Generate smooth SVG path using cubic Bezier curves
+  function generateSmoothPath(moods: MoodEntry[]): string {
+    if (moods.length === 0) return '';
+    if (moods.length === 1) {
+      const hour = getHourFromTimestamp(moods[0].timestamp);
+      const x = (hour / 24) * 600;
+      const y = 400 - ((moods[0].mood - 1) / 4) * 350 - 25;
+      return `M ${x} ${y}`;
+    }
+
+    const sortedMoods = [...moods].sort((a, b) => a.timestamp - b.timestamp);
+    const points = sortedMoods.map((entry) => {
+      const hour = getHourFromTimestamp(entry.timestamp);
+      const x = (hour / 24) * 600;
+      const y = 400 - ((entry.mood - 1) / 4) * 350 - 25;
+      return { x, y };
+    });
+
+    // Start path at first point
+    let path = `M ${points[0].x} ${points[0].y}`;
+
+    // Create smooth curves between points
+    for (let i = 0; i < points.length - 1; i++) {
+      const current = points[i];
+      const next = points[i + 1];
+      
+      // Calculate control points for smooth curve
+      const xDiff = next.x - current.x;
+      const yDiff = next.y - current.y;
+      
+      // Control point distance (adjust for smoothness)
+      const smoothness = 0.3;
+      
+      const cp1x = current.x + xDiff * smoothness;
+      const cp1y = current.y;
+      
+      const cp2x = next.x - xDiff * smoothness;
+      const cp2y = next.y;
+      
+      // Add cubic Bezier curve
+      path += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${next.x} ${next.y}`;
+    }
+
+    return path;
   }
 </script>
 
 <section class="mood-graph-card">
   <div class="mood-header">
-    <h2 class="mood-title">TODAY'S MOOD TRACKER</h2>
+    <h2 class="mood-title">Today's Mood Tracker</h2>
   </div>
 
   <div class="graph-container">
@@ -68,55 +104,66 @@
         <line x1="0" y1="400" x2="600" y2="400" stroke="#9CA3AF" stroke-width="2" />
 
         {#if $todaysMoods.length > 0}
-          <!-- Sort moods by timestamp for proper line drawing -->
           {@const sortedMoods = [...$todaysMoods].sort((a, b) => a.timestamp - b.timestamp)}
           
-          <!-- Mood line -->
-          <polyline
+          <!-- Gradient for the line -->
+          <defs>
+            <linearGradient id="moodGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+              <stop offset="50%" style="stop-color:#A78BFA;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#C4B5FD;stop-opacity:1" />
+            </linearGradient>
+            
+            <!-- Glow effect -->
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- Smooth mood line -->
+          <path
+            d={generateSmoothPath(sortedMoods)}
             fill="none"
-            stroke="#A78BFA"
-            stroke-width="6"
+            stroke="url(#moodGradient)"
+            stroke-width="4"
             stroke-linecap="round"
             stroke-linejoin="round"
-            points={sortedMoods
-              .map((entry) => {
-                const hour = getHourFromTimestamp(entry.timestamp);
-                const x = (hour / 24) * 600; // 0-24 hours mapped to 0-600px
-                const y = 400 - ((entry.mood - 1) / 4) * 350 - 25;
-                return `${x},${y}`;
-              })
-              .join(" ")
-            }
+            filter="url(#glow)"
+            class="mood-line"
           />
 
           <!-- Data points with time labels -->
-          {#each sortedMoods as entry}
+          {#each sortedMoods as entry, index}
             {@const hour = getHourFromTimestamp(entry.timestamp)}
             {@const x = (hour / 24) * 600}
             {@const y = 400 - ((entry.mood - 1) / 4) * 350 - 25}
             
             <g>
+              <!-- Larger background circle for better visibility -->
+              <circle
+                cx={x}
+                cy={y}
+                r="10"
+                fill="white"
+                opacity="0.9"
+              />
+              
               <!-- Point -->
               <circle
                 cx={x}
                 cy={y}
-                r="8"
+                r="7"
                 fill="#A78BFA"
                 stroke="white"
-                stroke-width="3"
+                stroke-width="2"
+                class="mood-point"
               />
               
-              <!-- Time label above point -->
-              <text
-                x={x}
-                y={y - 15}
-                text-anchor="middle"
-                font-size="12"
-                font-weight="600"
-                fill="#8b5cf6"
-              >
-                {formatTime(entry.timestamp)}
-              </text>
+              
             </g>
           {/each}
         {:else}
@@ -168,7 +215,7 @@
   .mood-title {
     font-size: 22px;
     font-weight: 700;
-    color: #6366f1;
+    color: #000000;
   }
 
   .edit-btn {
@@ -182,6 +229,7 @@
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     border: none;
     cursor: pointer;
+    transition: background 0.2s;
   }
 
   .edit-btn:hover {
@@ -245,5 +293,47 @@
     color: #8b5cf6;
     white-space: nowrap;
     transform: translateX(-50%);
+  }
+
+  /* Animations */
+  .mood-line {
+    animation: drawLine 1s ease-out;
+  }
+
+  @keyframes drawLine {
+    from {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+    }
+    to {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .mood-point {
+    transition: r 0.2s, fill 0.2s;
+    cursor: pointer;
+  }
+
+  .mood-point:hover {
+    r: 9;
+    fill: #8b5cf6;
+  }
+
+  .time-label {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -5px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
   }
 </style>

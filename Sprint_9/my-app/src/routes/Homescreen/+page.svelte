@@ -60,7 +60,7 @@
 
 	<!-- Todo List Section -->
 	<section class="todo-section">
-		<h2>Today's To-do List</h2>
+		<h2>Today's To-Do List</h2>
 		<ul class="todo-list">
 			{#each todos as todo (todo.id)}
 				<li class="todo-item">
