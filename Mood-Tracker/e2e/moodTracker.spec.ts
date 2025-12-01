@@ -28,3 +28,27 @@ test('Yoga Page: Submit Feeling', async ({ page}) => {
   await page.getByRole('button', { name: 'Open Current Feeling Popup' }).click();
   await expect(page.getByRole('heading', { name: 'How do you feel currently?' })).toBeVisible();
 });
+
+// Breathing Selection
+test('Start Breathing selection load from Breathing Selection', async ({ page }) => {
+  await page.goto(BASE_URL + '/Breathingscreen');
+
+  await page.getByRole('button', {name: '5 Minute Exercise'}).click();
+  await expect(page.getByRole('button', { name: '5 Minute Exercise'})).toBeVisible();
+});
+
+// Breathing Exercise
+test('Start Breathing exercise load from Breathing Exercise', async ({ page }) => {
+  await page.goto(BASE_URL + '/BreathingExerciseScreen');
+
+  await page.getByRole('button', {name: 'Reset'}).click();
+  await expect(page.getByRole('button', { name: 'Reset'})).toBeVisible();
+});
+
+// Exit
+//test('Start Exit page', async ({ page }) => {
+  //await page.goto(BASE_URL + '/Exitscreen');
+
+  //await page.getByRole('table', {name: 'NO.'}).isVisible();
+  //await expect(page.getByRole('table', {name: 'NO.'})).toBeVisible();
+//});
