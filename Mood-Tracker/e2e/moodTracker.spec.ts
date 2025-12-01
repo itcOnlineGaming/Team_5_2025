@@ -11,6 +11,20 @@ test(`Test on Playwright Page`, async ({ page }) => {
 test('Show Start Screen Popup', async ({ page }) => {
   await page.goto(BASE_URL);
 
-  await page.getByRole('button', {name: 'View Information'}).click();
+  await page.getByRole('button', { name: 'View Information' }).click();
   await expect(page.getByRole('heading', { name: 'Hello, and welcome to our application called "Mood Tracker".' })).toBeVisible();
+});
+
+// Yoga Exercise
+test('Yoga Page: Load Main Menu', async ({ page }) => {
+  await page.goto(BASE_URL + "/YogaScreen");
+
+  await expect(page.getByRole('heading', { name: 'Yoga Exercises' })).toBeVisible();
+});
+
+test('Yoga Page: Submit Feeling', async ({ page}) => {
+  await page.goto(BASE_URL + "/YogaScreen");
+
+  await page.getByRole('button', { name: 'Open Current Feeling Popup' }).click();
+  await expect(page.getByRole('heading', { name: 'How do you feel currently?' })).toBeVisible();
 });
