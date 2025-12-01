@@ -100,6 +100,7 @@
                             onkeydown={handleKeydown}
                             placeholder="Enter a new task..."
                             class="task-input"
+                            maxlength="45"
                         />
                         <button onclick={addTask} class="add-btn">
                             ADD +
