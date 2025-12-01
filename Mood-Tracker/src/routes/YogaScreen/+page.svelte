@@ -13,6 +13,8 @@
 <div class="yoga-container">
     <h1 class="text-bubble">Yoga Exercises</h1>
 
+    <h2>Enable / Disable Exercises</h2>
+
     <!-- Selecting Exercises -->
     <SelectExercisesArea/>
 
