@@ -12,7 +12,7 @@
 </script>
 
 <div class="yoga-container">
-    <h1>Yoga Exercise Results</h1>
+    <h1 class="text-bubble">Yoga Exercise Results</h1>
 
     <h2>Duration Completed: {$completedTime.toFixed(2)}%</h2>    
 

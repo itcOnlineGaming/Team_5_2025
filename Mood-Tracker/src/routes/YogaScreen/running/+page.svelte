@@ -28,7 +28,7 @@
 </script>
 
 <div class="yoga-container">
-    <h1>Yoga Exercise Session</h1>
+    <h1 class="text-bubble">Yoga Exercise Session</h1>
 
     <!-- Shown Current Exercise -->
     <CycleExercises on:timerUpdate={handleTimer}/>

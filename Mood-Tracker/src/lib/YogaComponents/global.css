@@ -159,3 +159,11 @@
     flex-wrap: wrap;
     gap: 0.5rem;
 }
+
+.text-bubble {
+    background: rgba(255, 255, 255, 0.75);
+    padding: 15px 25px;
+    border-radius: 25px;
+    display: inline-block;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}

@@ -11,7 +11,7 @@
 </script>
 
 <div class="yoga-container">
-    <h1>Yoga Exercises</h1>
+    <h1 class="text-bubble">Yoga Exercises</h1>
 
     <!-- Selecting Exercises -->
     <SelectExercisesArea/>
