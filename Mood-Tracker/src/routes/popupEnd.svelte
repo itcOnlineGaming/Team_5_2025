@@ -5,7 +5,7 @@
     //let showExitPopup = $state(false);
 	let showExitPopup = false;
 
-	let number_rating = -1
+	let number_rating = 1
 	let feedback_submitted = " "
 
     function openExitPopup() {

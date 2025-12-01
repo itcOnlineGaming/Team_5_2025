@@ -19,12 +19,14 @@
     <!--Select Duration -->
     <SetTimer/>
 
-    <!-- Popup for Current State of Mind -->
-    <Popup/>
 
     <!-- Page Navigation -->
     <NextPageButton to={`${base}/YogaScreen/running`} label="Start" navigate={navigate}/>
 
     <!-- Return to Homescreen -->
     <NextPageButton to={`${base}/Homescreen`} label="Exit" navigate={navigate}/>
+
+    <!-- Popup for Current State of Mind -->
+    <Popup/>
+
 </div>
