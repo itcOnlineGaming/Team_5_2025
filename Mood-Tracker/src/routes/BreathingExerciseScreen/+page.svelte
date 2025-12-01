@@ -74,7 +74,7 @@
 
 <div class="container">
 
-    <h1 class="title">Breathing Exercise Screen</h1>
+    <h1 class="title-breathing">Breathing Exercise Screen</h1>
 
     <!-- Timer Display -->
     <div class="timer-display">
@@ -87,7 +87,7 @@
         <div class="dynamic-circle"></div>
     </div>
 
-    <p class="instruction-text">| Match your breathing to the rhythm |</p>
+    <p class="instruction-text">Match your breathing to the rhythm</p>
 
     <!-- Timer Controls -->
     <div class="timer-buttons">
@@ -113,8 +113,8 @@
     .breathing-circle-container 
     {
         position: relative;
-        width: 200px;
-        height: 200px;
+        width: 250px;
+        height: 250px;
         margin: 2rem auto;
     }
 
@@ -124,8 +124,8 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
         border-radius: 50%;
         background-color: #5cb8f6;
         z-index: 2;
@@ -137,8 +137,8 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
         border-radius: 50%;
         background-color: rgba(255, 255, 255, 0.4);
         z-index: 1;
@@ -162,7 +162,7 @@
     .timer-buttons button 
     {
         padding: 0.75rem 1.5rem;
-        font-size: 1rem;
+        font-size: 2rem;
         border-radius: 8px;
         border: none;
         cursor: pointer;
@@ -203,14 +203,14 @@
     .instruction-text 
     {
         text-align: center;
-        font-size: 1.2rem;
+        font-size: 2rem;
         color: black;
-        margin-top: 5.0rem;
-        margin-bottom: 5.0rem;
+        margin-top: 9.0rem;
+        margin-bottom: 8.0rem;
     }
 
     .exit-btn:hover 
     {
-        opacity: 0.9;
+        opacity: 0.8;
     }
 </style>
