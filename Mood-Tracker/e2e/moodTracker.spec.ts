@@ -15,6 +15,19 @@ test('Show Start Screen Popup', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Hello, and welcome to our application called "Mood Tracker".' })).toBeVisible();
 });
 
+// Yoga Pages Tests
+test('Yoga Page: Load Main Menu', async ({ page }) => {
+  await page.goto(BASE_URL + "/YogaScreen");
+
+  await expect(page.getByRole('heading', { name: 'Yoga Exercises' })).toBeVisible();
+});
+
+test('Yoga Page: Click Exercise', async ({ page }) => {
+  await page.goto(BASE_URL + "/YogaScreen");
+
+  await expect(page.getByRole('button', { name: '🧘' })).toBeVisible();
+});
+
 test('Yoga Page: Submit Feeling', async ({ page}) => {
   await page.goto(BASE_URL + "/YogaScreen");
 
