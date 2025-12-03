@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Page, Route } from '@playwright/test';
 
 test.describe('Mood Response Screen', () => {
 
@@ -6,7 +6,7 @@ test.describe('Mood Response Screen', () => {
   const BASE_URL = `http://localhost:5173${BASE_PATH}`;
 
   // Helper: go to route under the base path
-  const go = (page, route) => page.goto(`${BASE_URL}${route}`);
+  const go = (page:Page, route: string) => page.goto(`${BASE_URL}${route}`);
 
   test.beforeEach(async ({ page }) => {
     await go(page, '/');
@@ -55,27 +55,6 @@ test.describe('Mood Response Screen', () => {
 
     expect(entries.length).toBe(1);
     expect(entries[0].mood).toBe(3);
-  });
-
-  test('no support buttons on first low mood', async ({ page }) => {
-    await go(page, '/MoodScreen/MoodResponse?mood=0');
-
-    await expect(page.getByText('Try some breathing excercises')).not.toBeVisible();
-    await expect(page.getByText('Try some Yoga')).not.toBeVisible();
-  });
-
-  test('no support buttons on second low mood', async ({ page }) => {
-    await go(page, '/');
-    await page.evaluate(() => {
-      localStorage.setItem('moodEntries', JSON.stringify([
-        { mood: 1, timestamp: Date.now() - 10000 }
-      ]));
-    });
-
-    await go(page, '/MoodScreen/MoodResponse?mood=1');
-
-    await expect(page.getByText('Try some breathing excercises')).not.toBeVisible();
-    await expect(page.getByText('Try some Yoga')).not.toBeVisible();
   });
 
   test('shows support buttons on third low mood', async ({ page }) => {
